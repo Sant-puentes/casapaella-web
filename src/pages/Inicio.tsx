@@ -36,7 +36,7 @@ function Hero({ onNavigate }: { onNavigate: (page: Page) => void }) {
         <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 rounded-full mb-6 sm:mb-8 animate-fade-in">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-saffron-400 fill-saffron-400" />
+              <Star key={i} className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-amber-400 fill-amber-400" />
             ))}
           </div>
           <span className="text-cream-100 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
@@ -189,7 +189,7 @@ function Reviews() {
             <div key={t.name} className="bg-white rounded-2xl p-6 shadow-lg border border-saffron-200/40">
               <div className="flex mb-3">
                 {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} className="w-4 h-4 text-saffron-500 fill-saffron-500" />
+                  <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
                 ))}
               </div>
               <p className="text-charcoal-700/80 text-sm leading-relaxed mb-4 font-serif italic">
