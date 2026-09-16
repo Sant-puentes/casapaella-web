@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans bg-cream-50 text-charcoal-800 antialiased;
+  }
+}
+
+@layer utilities {
+  .text-shadow-lg {
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  }
+  .text-shadow-md {
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  .bg-gradient-saffron {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+  }
+  .bg-gradient-warm {
+    background: linear-gradient(135deg, #fdf8ee 0%, #faf0d9 100%);
+  }
+  .bg-gradient-dark {
+    background: linear-gradient(180deg, #1f1a16 0%, #2d2520 100%);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #fdf8ee;
+}
+::-webkit-scrollbar-thumb {
+  background: #d97706;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b45309;
+}
+
+/* Reveal animation utility */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile: disable hover scale effects to prevent sticky hover */
+@media (hover: none) and (pointer: coarse) {
+  .group:hover img {
+    transform: none !important;
+  }
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  .hover\:-translate-y-2:hover,
+  .hover\:scale-\[1\.02\]:hover {
+    transform: none !important;
+  }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Smooth font rendering on mobile */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
