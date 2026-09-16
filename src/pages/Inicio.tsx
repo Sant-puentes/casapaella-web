@@ -26,14 +26,14 @@ function Hero({ onNavigate }: { onNavigate: (page: Page) => void }) {
           alt="Paella de mariscos"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/70 via-charcoal-900/50 to-charcoal-900/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/75 via-charcoal-900/55 to-charcoal-900/85" />
       </div>
 
-      <div className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-saffron-500/20 blur-3xl animate-pulse-slow" />
-      <div className="absolute bottom-1/4 right-10 w-32 h-32 rounded-full bg-terracotta-500/20 blur-3xl animate-pulse-slow" />
+      <div className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-saffron-500/25 blur-3xl animate-pulse-slow" />
+      <div className="absolute bottom-1/4 right-10 w-32 h-32 rounded-full bg-saffron-500/15 blur-3xl animate-pulse-slow" />
 
       <div className="relative z-10 text-center px-5 sm:px-6 max-w-4xl">
-        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-cream-50/10 backdrop-blur-sm border border-cream-50/20 rounded-full mb-6 sm:mb-8 animate-fade-in">
+        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 rounded-full mb-6 sm:mb-8 animate-fade-in">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-saffron-400 fill-saffron-400" />
@@ -45,7 +45,7 @@ function Hero({ onNavigate }: { onNavigate: (page: Page) => void }) {
         </div>
 
         <h1 className="font-serif text-4xl xs:text-5xl sm:text-7xl md:text-8xl font-bold text-cream-50 leading-tight mb-5 sm:mb-6 text-shadow-lg animate-fade-in-up">
-          Casa <span className="text-saffron-500 italic">Paella</span>
+          Casa <span className="text-saffron-400 italic">Paella</span>
         </h1>
 
         <p className="text-base sm:text-lg md:text-xl text-cream-100/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-shadow-md animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
@@ -56,13 +56,13 @@ function Hero({ onNavigate }: { onNavigate: (page: Page) => void }) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
           <button
             onClick={() => onNavigate('reservas')}
-            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-charcoal-900 font-bold rounded-full text-base sm:text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-saffron-500/40 hover:scale-105"
+            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base sm:text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-saffron-500/40 hover:scale-105"
           >
             Reservar mesa
           </button>
           <button
             onClick={() => onNavigate('menu')}
-            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-cream-50/10 backdrop-blur-sm border border-cream-50/30 hover:bg-cream-50/20 text-cream-50 font-semibold rounded-full text-base sm:text-lg transition-all duration-300 hover:scale-105"
+            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 hover:bg-cream-50/20 text-cream-50 font-semibold rounded-full text-base sm:text-lg transition-all duration-300 hover:scale-105"
           >
             Ver la carta
           </button>
@@ -76,7 +76,7 @@ function FlamencoSection() {
   const { ref, visible } = useReveal();
   return (
     <section className="py-16 sm:py-24 bg-gradient-dark relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-80 h-80 bg-terracotta-500/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-saffron-500/10 rounded-full blur-3xl" />
       <div ref={ref} className={`relative max-w-6xl mx-auto px-5 sm:px-6 grid md:grid-cols-2 gap-10 sm:gap-12 items-center ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="relative order-2 md:order-1">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-saffron-500/10 border border-saffron-500/30 rounded-full mb-4">
@@ -84,7 +84,7 @@ function FlamencoSection() {
             <span className="text-saffron-400 text-xs font-semibold tracking-wider uppercase">Show en vivo</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-cream-50 mb-5 leading-tight">
-            Show de <span className="text-terracotta-400 italic">Flamenco</span>
+            Show de <span className="text-saffron-400 italic">Flamenco</span>
           </h2>
           <p className="text-cream-100/70 text-base leading-relaxed mb-6">
             Cada viernes y sábado, Casa Paella se transforma con un espectáculo de
@@ -116,14 +116,14 @@ function FlamencoSection() {
 function FeaturedDishes({ onNavigate }: { onNavigate: (page: Page) => void }) {
   const { ref, visible } = useReveal();
   return (
-    <section className="py-16 sm:py-24 bg-cream-50">
+    <section className="py-16 sm:py-24 bg-cream-100">
       <div ref={ref} className={`max-w-7xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="text-center mb-10 sm:mb-12">
           <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
             Platos destacados
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-800 mt-3 mb-3 sm:mb-4">
-            Nuestras <span className="text-terracotta-600 italic">especialidades</span>
+            Nuestras <span className="text-saffron-600 italic">especialidades</span>
           </h2>
           <p className="text-charcoal-700/60 max-w-xl mx-auto text-sm sm:text-base">
             Una muestra de lo que encontrarás en nuestra carta completa.
@@ -132,16 +132,16 @@ function FeaturedDishes({ onNavigate }: { onNavigate: (page: Page) => void }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10">
           {featuredDishes.map((dish) => (
-            <div key={dish.id} className="group relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div key={dish.id} className="group relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-saffron-200/40">
               <div className="relative h-52 sm:h-56 overflow-hidden">
                 <img src={dish.image} alt={dish.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent" />
                 {dish.tag && (
-                  <span className="absolute top-3 right-3 px-3 py-1 bg-saffron-500 text-charcoal-900 text-xs font-bold rounded-full shadow-md">
+                  <span className="absolute top-3 right-3 px-3 py-1 bg-saffron-500 text-cream-50 text-xs font-bold rounded-full shadow-md">
                     {dish.tag}
                   </span>
                 )}
-                <span className="absolute bottom-3 left-3 px-4 py-1.5 bg-cream-50/95 backdrop-blur-sm text-charcoal-900 font-serif text-base font-bold rounded-full shadow-md">
+                <span className="absolute bottom-3 left-3 px-4 py-1.5 bg-cream-50/95 backdrop-blur-sm text-saffron-700 font-serif text-base font-bold rounded-full shadow-md">
                   {formatPrice(dish.price)}
                 </span>
               </div>
@@ -156,7 +156,7 @@ function FeaturedDishes({ onNavigate }: { onNavigate: (page: Page) => void }) {
         <div className="text-center">
           <button
             onClick={() => onNavigate('menu')}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-charcoal-900 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
           >
             Ver menú completo
             <ChevronRight className="w-5 h-5" />
@@ -172,7 +172,7 @@ function Reviews() {
   return (
     <section className="py-16 sm:py-24 bg-gradient-warm relative overflow-hidden">
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-saffron-200/30 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 right-0 w-72 h-72 bg-terracotta-200/20 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 right-0 w-72 h-72 bg-saffron-200/20 rounded-full blur-3xl" />
 
       <div ref={ref} className={`relative max-w-5xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="text-center mb-10 sm:mb-12">
@@ -180,13 +180,13 @@ function Reviews() {
             Reseñas
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-800 mt-3">
-            Lo que dicen <span className="text-terracotta-600 italic">nuestros clientes</span>
+            Lo que dicen <span className="text-saffron-600 italic">nuestros clientes</span>
           </h2>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-6">
           {testimonials.map((t) => (
-            <div key={t.name} className="bg-white rounded-2xl p-6 shadow-lg">
+            <div key={t.name} className="bg-white rounded-2xl p-6 shadow-lg border border-saffron-200/40">
               <div className="flex mb-3">
                 {[...Array(t.rating)].map((_, j) => (
                   <Star key={j} className="w-4 h-4 text-saffron-500 fill-saffron-500" />
@@ -224,7 +224,7 @@ function EventsPreview({ onNavigate }: { onNavigate: (page: Page) => void }) {
               Eventos en vivo
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-cream-50 mt-3 mb-5 leading-tight">
-              Preparamos la paella para tus <span className="text-saffron-500 italic">eventos</span>
+              Preparamos la paella para tus <span className="text-saffron-400 italic">eventos</span>
             </h2>
             <p className="text-cream-100/70 text-base leading-relaxed mb-6">
               Llevamos la experiencia de Casa Paella a tu evento. Cocinamos en vivo
@@ -233,7 +233,7 @@ function EventsPreview({ onNavigate }: { onNavigate: (page: Page) => void }) {
             </p>
             <button
               onClick={() => onNavigate('eventos')}
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-charcoal-900 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
             >
               Ver eventos en vivo
               <ChevronRight className="w-5 h-5" />
@@ -248,14 +248,14 @@ function EventsPreview({ onNavigate }: { onNavigate: (page: Page) => void }) {
 function Location() {
   const { ref, visible } = useReveal();
   return (
-    <section id="ubicacion" className="py-16 sm:py-24 bg-cream-50">
+    <section id="ubicacion" className="py-16 sm:py-24 bg-cream-100 mediterranean-pattern">
       <div ref={ref} className={`max-w-5xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="text-center mb-10 sm:mb-12">
           <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
             Ubicación
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-800 mt-3 mb-3 sm:mb-4">
-            Visítanos en <span className="text-terracotta-600 italic">Bucaramanga</span>
+            Visítanos en <span className="text-saffron-600 italic">Bucaramanga</span>
           </h2>
         </div>
 

@@ -51,7 +51,7 @@ export default function Navbar({
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled || open || currentPage !== 'inicio'
-          ? 'bg-charcoal-900/95 backdrop-blur-md shadow-lg py-3'
+          ? 'bg-charcoal-900/95 backdrop-blur-md shadow-lg py-3 border-b-2 border-saffron-500/40'
           : 'bg-transparent py-4 sm:py-5'
       }`}
     >
@@ -62,7 +62,7 @@ export default function Navbar({
         >
           <Flame className="w-6 h-6 sm:w-7 sm:h-7 text-saffron-500 group-hover:text-saffron-400 transition-colors" />
           <span className="font-serif text-xl sm:text-2xl font-bold text-cream-50 tracking-wide">
-            Casa <span className="text-saffron-500">Paella</span>
+            Casa <span className="text-saffron-400">Paella</span>
           </span>
         </button>
 
@@ -99,7 +99,7 @@ export default function Navbar({
 
         <button
           onClick={() => handleNavigate('reservas')}
-          className="hidden lg:inline-flex items-center px-6 py-2.5 bg-saffron-500 hover:bg-saffron-600 text-charcoal-900 font-semibold rounded-full text-sm transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
+          className="hidden lg:inline-flex items-center px-6 py-2.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-semibold rounded-full text-sm transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
         >
           Reservar
         </button>
@@ -120,7 +120,7 @@ export default function Navbar({
           open ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <ul className="flex flex-col gap-1 px-4 pt-4 pb-8 bg-charcoal-900/98 backdrop-blur-md">
+        <ul className="flex flex-col gap-1 px-4 pt-4 pb-8 bg-charcoal-900/98 backdrop-blur-md border-t-2 border-saffron-500/30">
           {links.map((link, i) => (
             <li key={link.page}>
               <button
@@ -149,7 +149,7 @@ export default function Navbar({
           <li className="mt-4">
             <button
               onClick={() => handleNavigate('reservas')}
-              className="flex items-center justify-center w-full px-6 py-3.5 bg-saffron-500 text-charcoal-900 font-semibold rounded-full text-sm"
+              className="flex items-center justify-center w-full px-6 py-3.5 bg-saffron-500 text-cream-50 font-semibold rounded-full text-sm"
             >
               Reservar mesa
             </button>

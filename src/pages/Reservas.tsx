@@ -36,7 +36,7 @@ export default function Reservas() {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-saffron-500/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-saffron-500/15 rounded-full blur-3xl" />
 
       <div ref={ref} className={`relative z-10 max-w-2xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="text-center mb-8 sm:mb-10">
@@ -44,7 +44,7 @@ export default function Reservas() {
             Reservas
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-cream-50 mt-3 mb-3 sm:mb-4">
-            Reserva tu <span className="text-saffron-500 italic">mesa</span>
+            Reserva tu <span className="text-saffron-400 italic">mesa</span>
           </h1>
           <p className="text-cream-100/60 text-sm sm:text-base">
             Te esperamos en Casa Paella. Reserva tu mesa y déjate sorprender.
@@ -52,7 +52,7 @@ export default function Reservas() {
         </div>
 
         {submitted ? (
-          <div className="bg-cream-50/10 backdrop-blur-md border border-cream-50/20 rounded-2xl p-8 sm:p-12 text-center">
+          <div className="bg-cream-50/10 backdrop-blur-md border border-saffron-500/30 rounded-2xl p-8 sm:p-12 text-center">
             <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-saffron-400 mx-auto mb-4" />
             <h3 className="font-serif text-xl sm:text-2xl font-bold text-cream-50 mb-2">
               ¡Reserva enviada!
@@ -62,13 +62,13 @@ export default function Reservas() {
             </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="px-6 py-2.5 bg-saffron-500 text-charcoal-900 font-semibold rounded-full text-sm hover:bg-saffron-600 transition-colors"
+              className="px-6 py-2.5 bg-saffron-500 text-cream-50 font-semibold rounded-full text-sm hover:bg-saffron-600 transition-colors"
             >
               Hacer otra reserva
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="bg-cream-50/10 backdrop-blur-md border border-cream-50/20 rounded-2xl p-5 sm:p-8 space-y-4 sm:space-y-5">
+          <form onSubmit={handleSubmit} className="bg-cream-50/10 backdrop-blur-md border border-saffron-500/30 rounded-2xl p-5 sm:p-8 space-y-4 sm:space-y-5">
             <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
               <Field icon={User} label="Nombre completo">
                 <input
@@ -146,7 +146,7 @@ export default function Reservas() {
             </div>
 
             {/* Decoration option */}
-            <div className="bg-cream-50/5 border border-cream-50/10 rounded-xl p-4">
+            <div className="bg-cream-50/5 border border-saffron-500/20 rounded-xl p-4">
               <label className="flex items-start gap-3 cursor-pointer">
                 <button
                   type="button"
@@ -157,7 +157,7 @@ export default function Reservas() {
                       : 'border-cream-50/30'
                   }`}
                 >
-                  {form.decoration && <CheckCircle2 className="w-4 h-4 text-charcoal-900" />}
+                  {form.decoration && <CheckCircle2 className="w-4 h-4 text-cream-50" />}
                 </button>
                 <div>
                   <div className="flex items-center gap-2">
@@ -186,19 +186,19 @@ export default function Reservas() {
       <style>{`
         .form-input {
           width: 100%;
-          background: rgba(31, 26, 22, 0.5);
-          border: 1px solid rgba(254, 252, 248, 0.1);
+          background: rgba(28, 8, 8, 0.5);
+          border: 1px solid rgba(152, 25, 21, 0.2);
           border-radius: 0.75rem;
           padding: 0.75rem 1rem;
           font-size: 1rem;
-          color: #fefcf8;
+          color: #fffdfc;
           outline: none;
           transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .form-input::placeholder { color: rgba(254, 252, 248, 0.3); }
+        .form-input::placeholder { color: rgba(255, 253, 252, 0.3); }
         .form-input:focus {
-          border-color: #f59e0b;
-          box-shadow: 0 0 0 1px #f59e0b;
+          border-color: #981915;
+          box-shadow: 0 0 0 1px #981915;
         }
         .form-input { color-scheme: dark; }
       `}</style>

@@ -4,7 +4,7 @@ import type { Page } from '@/App';
 
 export default function Footer({ onNavigate }: { onNavigate: (page: Page) => void }) {
   return (
-    <footer className="bg-charcoal-900 text-cream-100/70 pt-12 sm:pt-16 pb-8">
+    <footer className="bg-charcoal-900 text-cream-100/70 pt-12 sm:pt-16 pb-8 mediterranean-pattern">
       <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-10 sm:mb-12">
           {/* Brand */}
@@ -12,7 +12,7 @@ export default function Footer({ onNavigate }: { onNavigate: (page: Page) => voi
             <div className="flex items-center gap-2 mb-4">
               <Flame className="w-7 h-7 text-saffron-500" />
               <span className="font-serif text-2xl font-bold text-cream-50">
-                Casa <span className="text-saffron-500">Paella</span>
+                Casa <span className="text-saffron-400">Paella</span>
               </span>
             </div>
             <p className="text-xs sm:text-sm leading-relaxed">
@@ -20,13 +20,13 @@ export default function Footer({ onNavigate }: { onNavigate: (page: Page) => voi
               Tradición, fuego y sabor en cada plato.
             </p>
             <div className="flex gap-3 mt-4 sm:mt-5">
-              <a href="#" className="w-9 h-9 rounded-full bg-cream-50/10 hover:bg-saffron-500 hover:text-charcoal-900 flex items-center justify-center transition-all">
+              <a href="#" className="w-9 h-9 rounded-full bg-cream-50/10 hover:bg-saffron-500 hover:text-cream-50 flex items-center justify-center transition-all">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-cream-50/10 hover:bg-saffron-500 hover:text-charcoal-900 flex items-center justify-center transition-all">
+              <a href="#" className="w-9 h-9 rounded-full bg-cream-50/10 hover:bg-saffron-500 hover:text-cream-50 flex items-center justify-center transition-all">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-cream-50/10 hover:bg-saffron-500 hover:text-charcoal-900 flex items-center justify-center transition-all">
+              <a href="#" className="w-9 h-9 rounded-full bg-cream-50/10 hover:bg-saffron-500 hover:text-cream-50 flex items-center justify-center transition-all">
                 <Mail className="w-4 h-4" />
               </a>
             </div>
@@ -75,7 +75,7 @@ export default function Footer({ onNavigate }: { onNavigate: (page: Page) => voi
           </div>
         </div>
 
-        <div className="border-t border-cream-50/10 pt-6 sm:pt-8 text-center text-xs sm:text-sm">
+        <div className="border-t border-saffron-500/30 pt-6 sm:pt-8 text-center text-xs sm:text-sm">
           <p>© 2026 Casa Paella. Todos los derechos reservados. Hecho con pasión en Bucaramanga.</p>
         </div>
       </div>

@@ -13,7 +13,7 @@ function DishCard({ dish }: { dish: Dish }) {
   return (
     <div
       ref={ref}
-      className={`group relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 ${visible ? 'reveal visible' : 'reveal'}`}
+      className={`group relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 ${visible ? 'reveal visible' : 'reveal'} border border-saffron-200/40`}
     >
       <div className="relative h-52 sm:h-56 overflow-hidden">
         <img
@@ -23,11 +23,11 @@ function DishCard({ dish }: { dish: Dish }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent" />
         {dish.tag && (
-          <span className="absolute top-3 right-3 px-3 py-1 bg-saffron-500 text-charcoal-900 text-xs font-bold rounded-full shadow-md">
+          <span className="absolute top-3 right-3 px-3 py-1 bg-saffron-500 text-cream-50 text-xs font-bold rounded-full shadow-md">
             {dish.tag}
           </span>
         )}
-        <span className="absolute bottom-3 left-3 px-4 py-1.5 bg-cream-50/95 backdrop-blur-sm text-charcoal-900 font-serif text-base font-bold rounded-full shadow-md">
+        <span className="absolute bottom-3 left-3 px-4 py-1.5 bg-cream-50/95 backdrop-blur-sm text-saffron-700 font-serif text-base font-bold rounded-full shadow-md">
           {formatPrice(dish.price)}
         </span>
       </div>
@@ -36,7 +36,7 @@ function DishCard({ dish }: { dish: Dish }) {
         <p className="text-charcoal-700/70 text-xs sm:text-sm leading-relaxed mb-4">{dish.description}</p>
         <button
           onClick={() => addItem(dish)}
-          className="w-full flex items-center justify-center gap-2 py-2.5 bg-saffron-100 hover:bg-saffron-500 text-saffron-700 hover:text-charcoal-900 font-semibold rounded-xl text-sm transition-all duration-300"
+          className="w-full flex items-center justify-center gap-2 py-2.5 bg-saffron-100 hover:bg-saffron-500 text-saffron-700 hover:text-cream-50 font-semibold rounded-xl text-sm transition-all duration-300"
         >
           <Plus className="w-4 h-4" />
           {qty > 0 ? `Agregado (${qty})` : 'Agregar'}
@@ -70,7 +70,7 @@ function CartSidebar() {
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between p-5 border-b border-charcoal-800/10">
+        <div className="flex items-center justify-between p-5 border-b border-saffron-500/20">
           <h2 className="font-serif text-xl font-bold text-charcoal-800 flex items-center gap-2">
             <ShoppingCart className="w-5 h-5 text-saffron-600" />
             Tu pedido
@@ -93,7 +93,7 @@ function CartSidebar() {
           <>
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               {items.map((item) => (
-                <div key={item.dish.id} className="flex gap-3 bg-white rounded-xl p-3 shadow-sm">
+                <div key={item.dish.id} className="flex gap-3 bg-white rounded-xl p-3 shadow-sm border border-saffron-200/30">
                   <img
                     src={item.dish.image}
                     alt={item.dish.name}
@@ -106,21 +106,21 @@ function CartSidebar() {
                       <div className="flex items-center gap-2 bg-cream-100 rounded-full px-2 py-1">
                         <button
                           onClick={() => updateQuantity(item.dish.id, -1)}
-                          className="w-6 h-6 flex items-center justify-center text-charcoal-700 hover:text-terracotta-600"
+                          className="w-6 h-6 flex items-center justify-center text-charcoal-700 hover:text-saffron-600"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
                         <span className="text-sm font-bold text-charcoal-800 w-5 text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.dish.id, 1)}
-                          className="w-6 h-6 flex items-center justify-center text-charcoal-700 hover:text-terracotta-600"
+                          className="w-6 h-6 flex items-center justify-center text-charcoal-700 hover:text-saffron-600"
                         >
                           <Plus className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       <button
                         onClick={() => removeItem(item.dish.id)}
-                        className="w-6 h-6 flex items-center justify-center text-charcoal-700/40 hover:text-terracotta-600"
+                        className="w-6 h-6 flex items-center justify-center text-charcoal-700/40 hover:text-saffron-600"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -133,7 +133,7 @@ function CartSidebar() {
               ))}
             </div>
 
-            <div className="border-t border-charcoal-800/10 p-5 space-y-4">
+            <div className="border-t border-saffron-500/20 p-5 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-charcoal-700/60 text-sm">Total ({totalItems} {totalItems === 1 ? 'plato' : 'platos'})</span>
                 <span className="font-serif text-2xl font-bold text-charcoal-800">{formatPrice(total)}</span>
@@ -147,7 +147,7 @@ function CartSidebar() {
               </button>
               <button
                 onClick={clear}
-                className="w-full py-2 text-charcoal-700/50 hover:text-terracotta-600 text-sm font-medium transition-colors"
+                className="w-full py-2 text-charcoal-700/50 hover:text-saffron-600 text-sm font-medium transition-colors"
               >
                 Vaciar carrito
               </button>
@@ -165,14 +165,14 @@ export default function MenuPage() {
   const category = menuCategories[activeCategory];
 
   return (
-    <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 bg-cream-50 min-h-screen">
+    <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 bg-cream-100 min-h-screen">
       <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <div className="text-center mb-8 sm:mb-10">
           <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
             Nuestra carta
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-800 mt-3 mb-3 sm:mb-4">
-            Sabores de <span className="text-terracotta-600 italic">España</span>
+            Sabores de <span className="text-saffron-600 italic">España</span>
           </h1>
           <p className="text-charcoal-700/60 max-w-xl mx-auto text-sm sm:text-base">
             Arma tu pedido, agrega los platos que quieras y envíanoslos por WhatsApp.
@@ -187,8 +187,8 @@ export default function MenuPage() {
               onClick={() => setActiveCategory(i)}
               className={`px-5 sm:px-7 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
                 activeCategory === i
-                  ? 'bg-saffron-500 text-charcoal-900 shadow-md'
-                  : 'bg-cream-100 text-charcoal-700/60 hover:text-charcoal-800'
+                  ? 'bg-saffron-500 text-cream-50 shadow-md'
+                  : 'bg-cream-200 text-charcoal-700/60 hover:text-charcoal-800'
               }`}
             >
               {cat.label}
@@ -208,11 +208,11 @@ export default function MenuPage() {
       {totalItems > 0 && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-3 pl-4 pr-6 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-charcoal-900 font-bold rounded-full text-sm shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-3 pl-4 pr-6 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-sm shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
         >
           <div className="relative">
             <ShoppingCart className="w-6 h-6" />
-            <span className="absolute -top-2 -right-2 w-5 h-5 bg-terracotta-600 text-cream-50 text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 w-5 h-5 bg-charcoal-900 text-cream-50 text-xs font-bold rounded-full flex items-center justify-center">
               {totalItems}
             </span>
           </div>

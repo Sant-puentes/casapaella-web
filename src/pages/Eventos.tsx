@@ -38,12 +38,12 @@ export default function Eventos() {
         </div>
 
         <div className="relative z-10 text-center px-5 sm:px-6 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-saffron-500/10 border border-saffron-500/30 rounded-full mb-6 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-saffron-500/15 border border-saffron-500/40 rounded-full mb-6 animate-fade-in">
             <Sparkles className="w-4 h-4 text-saffron-400" />
             <span className="text-saffron-400 text-xs font-semibold tracking-wider uppercase">Eventos en vivo</span>
           </div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-cream-50 leading-tight mb-5 text-shadow-lg animate-fade-in-up">
-            Preparamos la paella para tus <span className="text-saffron-500 italic">eventos</span>
+            Preparamos la paella para tus <span className="text-saffron-400 italic">eventos</span>
           </h1>
           <p className="text-base sm:text-lg text-cream-100/80 max-w-2xl mx-auto text-shadow-md animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
             Cocinamos en vivo para tus invitados con paellas gigantes, tapas y todo el sabor de España.
@@ -53,14 +53,14 @@ export default function Eventos() {
       </section>
 
       {/* Quote form */}
-      <section className="py-16 sm:py-24 bg-cream-50">
+      <section className="py-16 sm:py-24 bg-cream-100 mediterranean-pattern">
         <div ref={ref} className={`max-w-2xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
           <div className="text-center mb-8 sm:mb-10">
             <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
               Cotización
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-800 mt-3 mb-3 sm:mb-4">
-              Solicita tu <span className="text-terracotta-600 italic">cotización</span>
+              Solicita tu <span className="text-saffron-600 italic">cotización</span>
             </h2>
             <p className="text-charcoal-700/60 text-sm sm:text-base">
               Cuéntanos sobre tu evento y te enviaremos una cotización personalizada por WhatsApp.
@@ -78,13 +78,13 @@ export default function Eventos() {
               </p>
               <button
                 onClick={() => setSubmitted(false)}
-                className="px-6 py-2.5 bg-saffron-500 text-charcoal-900 font-semibold rounded-full text-sm hover:bg-saffron-600 transition-colors"
+                className="px-6 py-2.5 bg-saffron-500 text-cream-50 font-semibold rounded-full text-sm hover:bg-saffron-600 transition-colors"
               >
                 Solicitar otra cotización
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-5 sm:p-8 shadow-lg space-y-4 sm:space-y-5">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-5 sm:p-8 shadow-lg space-y-4 sm:space-y-5 border border-saffron-200/50">
               <Field icon={Users} label="Número de personas">
                 <input
                   required
@@ -150,7 +150,7 @@ export default function Eventos() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-saffron-500/10 rounded-full blur-3xl" />
         <div className="relative max-w-3xl mx-auto px-5 sm:px-6 text-center">
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-cream-50 mb-8">
-            Información de <span className="text-saffron-500 italic">contacto</span>
+            Información de <span className="text-saffron-400 italic">contacto</span>
           </h2>
           <div className="grid sm:grid-cols-2 gap-6">
             <div className="flex items-center gap-4 justify-center sm:justify-end">
@@ -178,19 +178,19 @@ export default function Eventos() {
       <style>{`
         .form-input-light {
           width: 100%;
-          background: #fdf8ee;
-          border: 1px solid rgba(45, 37, 32, 0.1);
+          background: #eee6e4;
+          border: 1px solid rgba(152, 25, 21, 0.15);
           border-radius: 0.75rem;
           padding: 0.75rem 1rem;
           font-size: 1rem;
-          color: #1f1a16;
+          color: #2c1110;
           outline: none;
           transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .form-input-light::placeholder { color: rgba(45, 37, 32, 0.3); }
+        .form-input-light::placeholder { color: rgba(44, 17, 16, 0.3); }
         .form-input-light:focus {
-          border-color: #f59e0b;
-          box-shadow: 0 0 0 1px #f59e0b;
+          border-color: #981915;
+          box-shadow: 0 0 0 1px #981915;
         }
       `}</style>
     </>
