@@ -1,8 +1,8 @@
+import { Link } from 'react-router-dom';
 import { Flame, MapPin, Phone, Clock, Instagram, Facebook, Mail } from 'lucide-react';
 import { restaurantInfo } from '@/data';
-import type { Page } from '@/App';
 
-export default function Footer({ onNavigate }: { onNavigate: (page: Page) => void }) {
+export default function Footer() {
   return (
     <footer className="bg-charcoal-900 mediterranean-pattern-dark text-cream-100/80 pt-14 sm:pt-20 pb-8 relative">
       {/* Top accent bar */}
@@ -70,10 +70,10 @@ export default function Footer({ onNavigate }: { onNavigate: (page: Page) => voi
           <div>
             <h4 className="font-serif text-lg font-bold text-saffron-400 mb-4">Navegación</h4>
             <ul className="space-y-2.5 text-sm text-cream-100/80">
-              <li><button onClick={() => onNavigate('inicio')} className="hover:text-saffron-400 transition-colors">Inicio</button></li>
-              <li><button onClick={() => onNavigate('menu')} className="hover:text-saffron-400 transition-colors">Menú</button></li>
-              <li><button onClick={() => onNavigate('reservas')} className="hover:text-saffron-400 transition-colors">Reservas</button></li>
-              <li><button onClick={() => onNavigate('eventos')} className="hover:text-saffron-400 transition-colors">Eventos en vivo</button></li>
+              <li><Link to="/" className="hover:text-saffron-400 transition-colors">Inicio</Link></li>
+              <li><Link to="/menu" className="hover:text-saffron-400 transition-colors">Menú</Link></li>
+              <li><Link to="/reservas" className="hover:text-saffron-400 transition-colors">Reservas</Link></li>
+              <li><Link to="/eventos" className="hover:text-saffron-400 transition-colors">Eventos en vivo</Link></li>
             </ul>
           </div>
         </div>

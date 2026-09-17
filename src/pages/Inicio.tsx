@@ -1,23 +1,24 @@
+import { useNavigate } from 'react-router-dom';
 import { Star, ChevronRight, MapPin, Phone, Clock, Calendar, Music } from 'lucide-react';
-import type { Page } from '@/App';
 import { useReveal } from '@/hooks/useReveal';
 import { featuredDishes, testimonials, restaurantInfo } from '@/data';
 import { formatPrice } from '@/utils/whatsapp';
 
-export default function InicioPage({ onNavigate }: { onNavigate: (page: Page) => void }) {
+export default function InicioPage() {
   return (
     <>
-      <Hero onNavigate={onNavigate} />
+      <Hero />
       <FlamencoSection />
-      <FeaturedDishes onNavigate={onNavigate} />
+      <FeaturedDishes />
       <Reviews />
-      <EventsPreview onNavigate={onNavigate} />
+      <EventsPreview />
       <Location />
     </>
   );
 }
 
-function Hero({ onNavigate }: { onNavigate: (page: Page) => void }) {
+function Hero() {
+  const navigate = useNavigate();
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -55,13 +56,13 @@ function Hero({ onNavigate }: { onNavigate: (page: Page) => void }) {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
           <button
-            onClick={() => onNavigate('reservas')}
+            onClick={() => navigate('/reservas')}
             className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base sm:text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-saffron-500/40 hover:scale-105"
           >
             Reservar mesa
           </button>
           <button
-            onClick={() => onNavigate('menu')}
+            onClick={() => navigate('/menu')}
             className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 hover:bg-cream-50/20 text-cream-50 font-semibold rounded-full text-base sm:text-lg transition-all duration-300 hover:scale-105"
           >
             Ver la carta
@@ -113,7 +114,8 @@ function FlamencoSection() {
   );
 }
 
-function FeaturedDishes({ onNavigate }: { onNavigate: (page: Page) => void }) {
+function FeaturedDishes() {
+  const navigate = useNavigate();
   const { ref, visible } = useReveal();
   return (
     <section className="py-16 sm:py-24 bg-cream-100">
@@ -155,7 +157,7 @@ function FeaturedDishes({ onNavigate }: { onNavigate: (page: Page) => void }) {
 
         <div className="text-center">
           <button
-            onClick={() => onNavigate('menu')}
+            onClick={() => navigate('/menu')}
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
           >
             Ver menú completo
@@ -205,7 +207,8 @@ function Reviews() {
   );
 }
 
-function EventsPreview({ onNavigate }: { onNavigate: (page: Page) => void }) {
+function EventsPreview() {
+  const navigate = useNavigate();
   const { ref, visible } = useReveal();
   return (
     <section className="py-16 sm:py-24 bg-gradient-dark relative overflow-hidden">
@@ -232,7 +235,7 @@ function EventsPreview({ onNavigate }: { onNavigate: (page: Page) => void }) {
               Cumpleaños, bodas, reuniones empresariales y más.
             </p>
             <button
-              onClick={() => onNavigate('eventos')}
+              onClick={() => navigate('/eventos')}
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
             >
               Ver eventos en vivo
