@@ -3,6 +3,7 @@ import { Calendar, Clock, Users, User, Phone, CheckCircle2, Sparkles } from 'luc
 import { useReveal } from '@/hooks/useReveal';
 import { occasionTypes } from '@/data';
 import { sendWhatsApp, buildReservationMessage } from '@/utils/whatsapp';
+import { getReservationSlots, getTodayLocalISODate } from '@/utils/schedule';
 
 export default function Reservas() {
   const { ref, visible } = useReveal();
@@ -25,6 +26,15 @@ export default function Reservas() {
 
   const update = (field: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const todayIso = getTodayLocalISODate();
+  const timeSlots = getReservationSlots(form.date);
+
+  const handleDateChange = (value: string) => {
+    // Al cambiar la fecha, se limpia la hora: los turnos disponibles cambian según el día
+    // (lunes y domingo solo tienen el turno de almuerzo).
+    setForm((prev) => ({ ...prev, date: value, time: '' }));
   };
 
   return (
@@ -129,21 +139,34 @@ export default function Reservas() {
                 <input
                   required
                   type="date"
+                  min={todayIso}
                   value={form.date}
-                  onChange={(e) => update('date', e.target.value)}
+                  onChange={(e) => handleDateChange(e.target.value)}
                   className="form-input"
                 />
               </Field>
               <Field icon={Clock} label="Hora">
-                <input
+                <select
                   required
-                  type="time"
                   value={form.time}
                   onChange={(e) => update('time', e.target.value)}
+                  disabled={!form.date}
                   className="form-input"
-                />
+                >
+                  <option value="" disabled className="bg-charcoal-800">
+                    {form.date ? 'Selecciona una hora' : 'Elige primero la fecha'}
+                  </option>
+                  {timeSlots.map((slot) => (
+                    <option key={slot} value={slot} className="bg-charcoal-800">
+                      {slot}
+                    </option>
+                  ))}
+                </select>
               </Field>
             </div>
+            <p className="text-cream-100/50 text-xs -mt-2">
+              Horario de reservas: lunes y domingo, 12:00 PM – 3:00 PM. Martes a sábado, 12:00 PM – 3:00 PM y 6:00 PM – 9:00 PM.
+            </p>
 
             {/* Decoration option */}
             <div className="bg-cream-50/5 border border-saffron-500/20 rounded-xl p-4">
