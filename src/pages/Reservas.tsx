@@ -16,6 +16,7 @@ export default function Reservas() {
     time: '',
     occasion: '',
     decoration: false,
+    decorationType: '',
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -35,6 +36,14 @@ export default function Reservas() {
     // Al cambiar la fecha, se limpia la hora: los turnos disponibles cambian según el día
     // (lunes y domingo solo tienen el turno de almuerzo).
     setForm((prev) => ({ ...prev, date: value, time: '' }));
+  };
+
+  const toggleDecoration = () => {
+    setForm((prev) => ({
+      ...prev,
+      decoration: !prev.decoration,
+      decorationType: prev.decoration ? '' : prev.decorationType,
+    }));
   };
 
   return (
@@ -178,7 +187,7 @@ export default function Reservas() {
                 <label className="flex items-start gap-3 cursor-pointer">
                   <button
                     type="button"
-                    onClick={() => update('decoration', !form.decoration)}
+                    onClick={toggleDecoration}
                     className={`flex-shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
                       form.decoration
                         ? 'bg-saffron-500 border-saffron-500'
@@ -198,6 +207,50 @@ export default function Reservas() {
                     </p>
                   </div>
                 </label>
+
+                {form.decoration && (
+                  <div className="mt-4 pt-4 border-t border-saffron-500/20">
+                    <p className="text-cream-100/70 text-sm font-medium mb-2">¿Para quién es la decoración?</p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <label
+                        className={`cursor-pointer text-center rounded-xl border-2 px-4 py-2.5 text-sm font-semibold transition-all ${
+                          form.decorationType === 'dama'
+                            ? 'bg-saffron-500 border-saffron-500 text-cream-50'
+                            : 'border-cream-50/20 text-cream-100/70 hover:border-saffron-500/50'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="decorationType"
+                          value="dama"
+                          required={form.decoration}
+                          checked={form.decorationType === 'dama'}
+                          onChange={(e) => update('decorationType', e.target.value)}
+                          className="sr-only"
+                        />
+                        Para dama
+                      </label>
+                      <label
+                        className={`cursor-pointer text-center rounded-xl border-2 px-4 py-2.5 text-sm font-semibold transition-all ${
+                          form.decorationType === 'caballero'
+                            ? 'bg-saffron-500 border-saffron-500 text-cream-50'
+                            : 'border-cream-50/20 text-cream-100/70 hover:border-saffron-500/50'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="decorationType"
+                          value="caballero"
+                          required={form.decoration}
+                          checked={form.decorationType === 'caballero'}
+                          onChange={(e) => update('decorationType', e.target.value)}
+                          className="sr-only"
+                        />
+                        Para caballero
+                      </label>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 

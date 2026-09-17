@@ -31,6 +31,7 @@ export function buildReservationMessage(data: {
   time: string;
   occasion: string;
   decoration: boolean;
+  decorationType: string;
 }): string {
   let msg = '🥘 *NUEVA RESERVA - Casa Paella*\n\n';
   msg += `*Nombre:* ${data.name}\n`;
@@ -40,7 +41,13 @@ export function buildReservationMessage(data: {
   msg += `*Hora:* ${data.time}\n`;
   msg += `*Ocasión:* ${data.occasion}\n`;
   if (data.decoration) {
-    msg += `*Decoración especial:* Sí (+$35,000 - mesa decorada y postre de cortesía)\n`;
+    const forWhom =
+      data.decorationType === 'dama'
+        ? 'para dama'
+        : data.decorationType === 'caballero'
+          ? 'para caballero'
+          : '';
+    msg += `*Decoración especial:* Sí${forWhom ? ` (${forWhom})` : ''} (+$35,000 - mesa decorada y postre de cortesía)\n`;
   } else {
     msg += `*Decoración especial:* No\n`;
   }
