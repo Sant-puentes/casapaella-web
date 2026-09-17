@@ -57,15 +57,19 @@ export function buildReservationMessage(data: {
 
 export function buildEventQuoteMessage(data: {
   people: string;
-  address: string;
+  zone: string;
   paellaType: string;
   date: string;
+  time: string;
+  total: number;
 }): string {
   let msg = '🥘 *COTIZACIÓN DE EVENTO - Casa Paella*\n\n';
   msg += `*Número de personas:* ${data.people}\n`;
-  msg += `*Dirección del evento:* ${data.address}\n`;
+  msg += `*Zona del evento:* ${data.zone}\n`;
   msg += `*Tipo de paella:* ${data.paellaType}\n`;
-  msg += `*Fecha del evento:* ${data.date}\n`;
-  msg += '\n¡Esperamos su cotización!';
+  msg += `*Fecha:* ${data.date}\n`;
+  msg += `*Hora:* ${data.time}\n`;
+  msg += `*Valor estimado:* ${formatPrice(data.total)}\n`;
+  msg += '\n¡Esperamos su confirmación!';
   return msg;
 }

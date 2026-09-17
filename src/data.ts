@@ -209,11 +209,28 @@ export const occasionTypes = [
   'Ocasión especial',
 ];
 
-export const paellaTypes = [
-  'Paella Valenciana',
-  'Paella de Mariscos',
-  'Paella Mixta',
-  'Paella Negra',
-  'Arroz con Pollo',
-  'Fideuá de Mariscos',
+export const eventZones = [
+  { name: 'Bucaramanga', price: 350000 },
+  { name: 'Floridablanca', price: 400000 },
+  { name: 'Ruitoque', price: 450000 },
+  { name: 'Piedecuesta', price: 450000 },
+  { name: 'Girón', price: 400000 },
+];
+
+export const eventPaellaTypes = [
+  {
+    name: 'Paella marinera',
+    pricePerPerson: 44000,
+    description: 'Pulpo, almejas, calamares (botón y anillos), camarones, mejillones y gambas.',
+  },
+  {
+    name: 'Paella mar y montaña',
+    pricePerPerson: 47000,
+    description: 'Pollo, costillitas de cerdo, calamares (botón y anillos), camarones, mejillones y gambas.',
+  },
+  {
+    name: 'Paella barbacoa',
+    pricePerPerson: 39000,
+    description: 'Pollo, costillitas de cerdo, chorizo artesanal y chorizo español.',
+  },
 ];
