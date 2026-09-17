@@ -195,9 +195,8 @@ export const restaurantInfo = {
   phone: '+57 315 387 7124',
   whatsapp: '573153877124',
   hours: [
-    { days: 'Lunes – Jueves', time: '12:00 – 22:00' },
-    { days: 'Viernes – Sábado', time: '12:00 – 24:00' },
-    { days: 'Domingo', time: '12:00 – 21:00' },
+    { days: 'Lunes y domingo', time: '12:00 PM – 3:00 PM' },
+    { days: 'Martes a sábado', time: '12:00 PM – 3:00 PM y 6:00 PM – 9:00 PM' },
   ],
   mapsUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.0!2d-73.12!3d7.12!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMDcnMTIuMCJOIDczwrAwNycxMi4wIlc!5e0!3m2!1ses!2sco!4v1600000000000',
 };
