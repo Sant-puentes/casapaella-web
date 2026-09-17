@@ -14,7 +14,7 @@ export default function Reservas() {
     people: '2',
     date: '',
     time: '',
-    occasion: occasionTypes[0],
+    occasion: '',
     decoration: false,
   });
 
@@ -80,61 +80,6 @@ export default function Reservas() {
         ) : (
           <form onSubmit={handleSubmit} className="bg-cream-50/10 backdrop-blur-md border border-saffron-500/30 rounded-2xl p-5 sm:p-8 space-y-4 sm:space-y-5">
             <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-              <Field icon={User} label="Nombre completo">
-                <input
-                  required
-                  type="text"
-                  placeholder="Tu nombre"
-                  value={form.name}
-                  onChange={(e) => update('name', e.target.value)}
-                  className="form-input"
-                />
-              </Field>
-              <Field icon={Phone} label="Teléfono de contacto">
-                <input
-                  required
-                  type="tel"
-                  placeholder="300 000 0000"
-                  value={form.phone}
-                  onChange={(e) => update('phone', e.target.value)}
-                  className="form-input"
-                />
-              </Field>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-              <Field icon={Users} label="Número de personas">
-                <select
-                  required
-                  value={form.people}
-                  onChange={(e) => update('people', e.target.value)}
-                  className="form-input"
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                    <option key={n} value={n} className="bg-charcoal-800">
-                      {n} {n === 1 ? 'persona' : 'personas'}
-                    </option>
-                  ))}
-                  <option value="9" className="bg-charcoal-800">9+ personas</option>
-                </select>
-              </Field>
-              <Field icon={Calendar} label="Tipo de ocasión">
-                <select
-                  required
-                  value={form.occasion}
-                  onChange={(e) => update('occasion', e.target.value)}
-                  className="form-input"
-                >
-                  {occasionTypes.map((occ) => (
-                    <option key={occ} value={occ} className="bg-charcoal-800">
-                      {occ}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
               <Field icon={Calendar} label="Fecha">
                 <input
                   required
@@ -168,32 +113,93 @@ export default function Reservas() {
               Horario de reservas: lunes y domingo, 12:00 PM – 3:00 PM. Martes a sábado, 12:00 PM – 3:00 PM y 6:00 PM – 9:00 PM.
             </p>
 
-            {/* Decoration option */}
-            <div className="bg-cream-50/5 border border-saffron-500/20 rounded-xl p-4">
-              <label className="flex items-start gap-3 cursor-pointer">
-                <button
-                  type="button"
-                  onClick={() => update('decoration', !form.decoration)}
-                  className={`flex-shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
-                    form.decoration
-                      ? 'bg-saffron-500 border-saffron-500'
-                      : 'border-cream-50/30'
-                  }`}
-                >
-                  {form.decoration && <CheckCircle2 className="w-4 h-4 text-cream-50" />}
-                </button>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-saffron-400" />
-                    <span className="text-cream-50 font-semibold text-sm">Decoración especial</span>
-                    <span className="text-saffron-400 font-bold text-sm">+$35,000</span>
-                  </div>
-                  <p className="text-cream-100/50 text-xs mt-1">
-                    Incluye mesa decorada y postre de cortesía para tu ocasión especial.
-                  </p>
-                </div>
-              </label>
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <Field icon={User} label="Nombre completo">
+                <input
+                  required
+                  type="text"
+                  placeholder="Tu nombre"
+                  value={form.name}
+                  onChange={(e) => update('name', e.target.value)}
+                  className="form-input"
+                />
+              </Field>
+              <Field icon={Phone} label="Teléfono de contacto">
+                <input
+                  required
+                  type="tel"
+                  placeholder="300 000 0000"
+                  value={form.phone}
+                  onChange={(e) => update('phone', e.target.value)}
+                  className="form-input"
+                />
+              </Field>
             </div>
+
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <Field icon={Users} label="Número de personas">
+                <input
+                  required
+                  type="number"
+                  min={1}
+                  step={1}
+                  inputMode="numeric"
+                  placeholder="Ej: 4"
+                  value={form.people}
+                  onChange={(e) => update('people', e.target.value)}
+                  className="form-input"
+                />
+              </Field>
+              <Field icon={Calendar} label="Tipo de ocasión">
+                <select
+                  required
+                  value={form.occasion}
+                  onChange={(e) => update('occasion', e.target.value)}
+                  className="form-input"
+                >
+                  <option value="" disabled className="bg-charcoal-800">
+                    Selecciona una ocasión
+                  </option>
+                  {occasionTypes.map((occ) => (
+                    <option key={occ} value={occ} className="bg-charcoal-800">
+                      {occ}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            </div>
+
+            {/* Decoration option: solo aparece una vez elegida la ocasión */}
+            {form.occasion && (
+              <div className="bg-cream-50/5 border border-saffron-500/20 rounded-xl p-4">
+                <p className="text-cream-50 font-semibold text-sm mb-3">
+                  ¿Deseas agregar una decoración especial?
+                </p>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <button
+                    type="button"
+                    onClick={() => update('decoration', !form.decoration)}
+                    className={`flex-shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
+                      form.decoration
+                        ? 'bg-saffron-500 border-saffron-500'
+                        : 'border-cream-50/30'
+                    }`}
+                  >
+                    {form.decoration && <CheckCircle2 className="w-4 h-4 text-cream-50" />}
+                  </button>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-saffron-400" />
+                      <span className="text-cream-50 font-semibold text-sm">Decoración especial</span>
+                      <span className="text-saffron-400 font-bold text-sm">+$35,000</span>
+                    </div>
+                    <p className="text-cream-100/50 text-xs mt-1">
+                      Incluye mesa decorada y postre de cortesía para tu ocasión especial.
+                    </p>
+                  </div>
+                </label>
+              </div>
+            )}
 
             <button
               type="submit"
