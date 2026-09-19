@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Flame, MapPin, Phone, Clock, Instagram, Facebook, Mail } from 'lucide-react';
+import { MapPin, Phone, Clock, Instagram, Facebook, Mail } from 'lucide-react';
 import { restaurantInfo } from '@/data';
 
 export default function Footer() {
@@ -12,12 +12,11 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-10 sm:mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <Flame className="w-8 h-8 text-saffron-500" />
-              <span className="font-serif text-2xl font-bold text-cream-50">
-                Casa <span className="text-saffron-400">Paella</span>
-              </span>
-            </div>
+            <img
+              src="/logo/logo-completo-blanco.svg"
+              alt="Casa Paella"
+              className="h-20 sm:h-24 w-auto mb-4"
+            />
             <p className="text-sm leading-relaxed text-cream-100/70">
               Auténtica paella valenciana y cocina mediterránea en Bucaramanga.
               Tradición, fuego y sabor en cada plato.

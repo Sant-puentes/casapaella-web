@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Flame, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface NavLink {
   label: string;
@@ -50,11 +50,12 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        <Link to="/" onClick={closeMenu} className="flex items-center gap-2 group">
-          <Flame className="w-6 h-6 sm:w-7 sm:h-7 text-saffron-500 group-hover:text-saffron-400 transition-colors" />
-          <span className="font-serif text-xl sm:text-2xl font-bold text-cream-50 tracking-wide">
-            Casa <span className="text-saffron-400">Paella</span>
-          </span>
+        <Link to="/" onClick={closeMenu} className="flex items-center group">
+          <img
+            src="/logo/logo-horizontal-blanco.svg"
+            alt="Casa Paella"
+            className="h-9 sm:h-10 w-auto"
+          />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-6">

@@ -45,8 +45,12 @@ function Hero() {
           </span>
         </div>
 
-        <h1 className="font-serif text-4xl xs:text-5xl sm:text-7xl md:text-8xl font-bold text-cream-50 leading-tight mb-5 sm:mb-6 text-shadow-lg animate-fade-in-up">
-          Casa <span className="text-saffron-400 italic">Paella</span>
+        <h1 className="mb-5 sm:mb-6 animate-fade-in-up">
+          <img
+            src="/logo/logo-completo-blanco.svg"
+            alt="Casa Paella"
+            className="mx-auto w-48 xs:w-56 sm:w-72 md:w-80 h-auto drop-shadow-lg"
+          />
         </h1>
 
         <p className="text-base sm:text-lg md:text-xl text-cream-100/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-shadow-md animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
