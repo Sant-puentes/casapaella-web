@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Star, ChevronRight, MapPin, Phone, Clock, Calendar, Music } from 'lucide-react';
 import { useReveal } from '@/hooks/useReveal';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { featuredDishes, testimonials, restaurantInfo } from '@/data';
 import { formatPrice } from '@/utils/whatsapp';
 
@@ -19,14 +20,33 @@ export default function InicioPage() {
 
 function Hero() {
   const navigate = useNavigate();
+  const reduceMotion = usePrefersReducedMotion();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.pexels.com/photos/14499018/pexels-photo-14499018.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Paella de mariscos"
-          className="w-full h-full object-cover"
-        />
+        {reduceMotion ? (
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/images/hero-poster-mobile.jpg" />
+            <img
+              src="/images/hero-poster-desktop.jpg"
+              alt="Chef preparando paella en vivo"
+              className="w-full h-full object-cover"
+            />
+          </picture>
+        ) : (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/images/hero-poster-desktop.jpg"
+            className="w-full h-full object-cover"
+          >
+            <source src="/videos/hero-desktop.mp4" media="(min-width: 768px)" type="video/mp4" />
+            <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/75 via-charcoal-900/55 to-charcoal-900/85" />
       </div>
 
