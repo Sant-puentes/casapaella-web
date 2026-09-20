@@ -32,6 +32,7 @@ export default function MenuPage() {
   const [pageNumber, setPageNumber] = useState(1);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [loadError, setLoadError] = useState(false);
+  const pageWrapperRef = useRef<HTMLDivElement>(null);
 
   // Se activa cuando el PDF termina de renderizarse por primera vez, para
   // disparar la animación de entrada (fade + slide-up). Es la animación que
@@ -56,6 +57,22 @@ export default function MenuPage() {
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
+
+  // Reinicia la animación de "pasar página" sin desmontar <Page>. Antes se
+  // usaba key={pageNumber} en el div animado, pero eso forzaba a React a
+  // desmontar y volver a montar <Page> en cada cambio, causando que la
+  // página renderizada desapareciera brevemente mientras PDF.js la volvía
+  // a dibujar desde cero (el "parpadeo"). Con este truco de reflow, <Page>
+  // se mantiene montado (React solo actualiza su prop pageNumber) y la
+  // animación CSS se reinicia igual.
+  useEffect(() => {
+    const el = pageWrapperRef.current;
+    if (!el) return;
+    el.style.animation = 'none';
+    // Forzar reflow para que el navegador "olvide" la animación anterior.
+    void el.offsetHeight;
+    el.style.animation = '';
+  }, [pageNumber]);
 
   const handleOrder = () => {
     sendWhatsApp('🥘 *Hola Casa Paella!*\n\nQuiero hacer un pedido, ¿me ayudan con la carta?');
@@ -164,9 +181,10 @@ export default function MenuPage() {
                   // de la animación para que no aparezca scroll horizontal.
                   <div className="w-full overflow-hidden">
                     <div
-                      // La key cambia con cada página, así React vuelve a
-                      // montar este div y dispara la animación de nuevo.
-                      key={pageNumber}
+                      // Ya no usa key={pageNumber}: ver el useEffect de más
+                      // arriba que reinicia esta animación sin desmontar
+                      // <Page>, evitando el parpadeo al cambiar de página.
+                      ref={pageWrapperRef}
                       className={direction === 'next' ? 'page-turn-next' : 'page-turn-prev'}
                       onAnimationEnd={() => setIsAnimating(false)}
                     >
@@ -174,6 +192,7 @@ export default function MenuPage() {
                         pageNumber={pageNumber}
                         width={Math.min(containerWidth, 900)}
                         renderAnnotationLayer={false}
+                        loading={null}
                       />
                     </div>
                   </div>
