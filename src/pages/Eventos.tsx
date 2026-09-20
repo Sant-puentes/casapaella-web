@@ -161,8 +161,8 @@ export default function Eventos() {
 
       {/* Quote calculator — 3-step flow */}
       <section className="py-16 sm:py-24 bg-cream-100 mediterranean-pattern">
-        <div ref={ref} className={`max-w-2xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
-          <div className="text-center mb-8 sm:mb-10">
+        <div className="max-w-2xl mx-auto px-5 sm:px-6">
+          <div className="text-center mb-8 sm:mb-10 animate-fade-in-up">
             <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
               Cotización
             </span>
@@ -174,7 +174,8 @@ export default function Eventos() {
             </p>
           </div>
 
-          {submitted ? (
+          <div ref={ref} className={visible ? 'reveal visible' : 'reveal'}>
+            {submitted ? (
             <div className="bg-white border border-saffron-200 rounded-2xl p-8 sm:p-12 text-center shadow-lg">
               <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-saffron-500 mx-auto mb-4" />
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-charcoal-800 mb-2">
@@ -532,6 +533,7 @@ export default function Eventos() {
               )}
             </div>
           )}
+          </div>
         </div>
       </section>
 
