@@ -164,21 +164,21 @@ export const featuredDishes: Dish[] = [
 
 export const testimonials = [
   {
-    name: 'María García',
-    role: 'Crítica gastronómica',
-    text: 'La mejor paella que he probado en Bucaramanga. El arroz en su punto, el socarrat perfecto. Un lugar que honra la tradición.',
+    name: 'Luz H. Prada',
+    role: 'Reseña de Google · hace 7 meses',
+    text: 'Un lugar precioso con una paella excelente. Los precios reflejan la calidad de la comida, lo que hace que la experiencia merezca la pena. Como el restaurante no es muy grande, es mejor reservar con antelación.',
     rating: 5,
   },
   {
-    name: 'Andrés Torres',
-    role: 'Cliente habitual',
-    text: 'Cada visita es un viaje a España. El servicio impecable, los ingredientes frescos y el show de flamenco es espectacular.',
+    name: 'Leidy Andrea Duarte Saavedra',
+    role: 'Reseña de Google · hace 2 meses',
+    text: 'Espectacular atención, muy personalizada. Los shows son impecables, lo transportar a uno a una tasca española. La comida es deliciosa!...',
     rating: 5,
   },
   {
-    name: 'Carolina Méndez',
-    role: 'Bloguera de gastronomía',
-    text: 'El ambiente, la comida, la música... todo está cuidado al detalle. Las tapas son auténticas y la paella de mariscos es extraordinaria.',
+    name: 'Veronica Uribe',
+    role: 'Reseña de Google · hace 4 semanas',
+    text: 'La atención muy chévere, nos explicaron y recomendaron lo mejor de la carta, un lugar lindo para disfrutar y celebrar eventos.',
     rating: 5,
   },
 ];

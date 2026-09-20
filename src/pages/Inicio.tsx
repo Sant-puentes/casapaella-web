@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Star, ChevronRight, MapPin, Phone, Clock, Calendar, Music } from 'lucide-react';
+import { Star, ChevronRight, ChevronDown, MapPin, Phone, Clock, Calendar } from 'lucide-react';
 import { useReveal } from '@/hooks/useReveal';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { featuredDishes, testimonials, restaurantInfo } from '@/data';
@@ -61,21 +61,27 @@ function Hero() {
             ))}
           </div>
           <span className="text-cream-100 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
-            Auténtica paella valenciana en Bucaramanga
+            4,7/5 en Google · +700 reseñas
           </span>
         </div>
 
-        <h1 className="mb-5 sm:mb-6 animate-fade-in-up">
+        <h1 className="mb-3 sm:mb-4 animate-fade-in-up">
           <img
             src="/logo/logo-completo-blanco.svg"
             alt="Casa Paella"
-            className="mx-auto w-48 xs:w-56 sm:w-72 md:w-80 h-auto drop-shadow-lg"
+            className="mx-auto w-[173px] xs:w-[202px] sm:w-[259px] md:w-[288px] h-auto drop-shadow-lg"
           />
         </h1>
 
+        <p
+          className="text-saffron-400 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-3 sm:mb-4 text-shadow-md animate-fade-in-up"
+          style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
+        >
+          Un pedacito de España en Bucaramanga
+        </p>
+
         <p className="text-base sm:text-lg md:text-xl text-cream-100/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-shadow-md animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-          El auténtico sabor de España, cocinado a fuego lento con arroz bomba,
-          azafrán puro y el mejor marisco fresco del día.
+          Arroz, fuego, mariscos y buenos momentos alrededor de una paella.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
@@ -93,6 +99,17 @@ function Hero() {
           </button>
         </div>
       </div>
+
+      <button
+        onClick={() => document.getElementById('show-flamenco')?.scrollIntoView({ behavior: 'smooth' })}
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-cream-100/80 hover:text-cream-50 transition-colors animate-fade-in"
+        style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
+      >
+        <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium">
+          Descubre nuestro show en vivo
+        </span>
+        <ChevronDown className="w-4 h-4 animate-bounce" />
+      </button>
     </section>
   );
 }
@@ -100,19 +117,15 @@ function Hero() {
 function FlamencoSection() {
   const { ref, visible } = useReveal();
   return (
-    <section className="py-16 sm:py-24 bg-gradient-dark relative overflow-hidden">
+    <section id="show-flamenco" className="py-16 sm:py-24 bg-gradient-dark relative overflow-hidden">
       <div className="absolute top-0 right-0 w-80 h-80 bg-saffron-500/10 rounded-full blur-3xl" />
       <div ref={ref} className={`relative max-w-6xl mx-auto px-5 sm:px-6 grid md:grid-cols-2 gap-10 sm:gap-12 items-center ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="relative order-2 md:order-1">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-saffron-500/10 border border-saffron-500/30 rounded-full mb-4">
-            <Music className="w-4 h-4 text-saffron-400" />
-            <span className="text-saffron-400 text-xs font-semibold tracking-wider uppercase">Show en vivo</span>
-          </div>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-cream-50 mb-5 leading-tight">
             Show de <span className="text-saffron-400 italic">Flamenco</span>
           </h2>
           <p className="text-cream-100/70 text-base leading-relaxed mb-6">
-            Cada viernes y sábado, Casa Paella se transforma con un espectáculo de
+            Cada sábado en la noche, Casa Paella se transforma con un espectáculo de
             flamenco en vivo. Disfruta de la pasión del baile, el sonido de la guitarra
             y el compás del cante mientras saboreas la mejor paella de Bucaramanga.
             Una experiencia que combina gastronomía y cultura española.
@@ -120,10 +133,10 @@ function FlamencoSection() {
           <div className="flex items-center gap-4 text-cream-100/60 text-sm">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-saffron-400" />
-              <span>Vie & Sáb</span>
+              <span>Sábado</span>
             </div>
             <div className="w-px h-4 bg-cream-50/20" />
-            <span>8:00 PM</span>
+            <span>7:30 PM</span>
           </div>
         </div>
         <div className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-2xl group">
