@@ -23,7 +23,7 @@ function Hero() {
   const reduceMotion = usePrefersReducedMotion();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-dvh flex flex-col overflow-hidden">
       <div className="absolute inset-0 z-0">
         {reduceMotion ? (
           <picture>
@@ -53,57 +53,59 @@ function Hero() {
       <div className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-saffron-500/25 blur-3xl animate-pulse-slow" />
       <div className="absolute bottom-1/4 right-10 w-32 h-32 rounded-full bg-saffron-500/15 blur-3xl animate-pulse-slow" />
 
-      <div className="relative z-10 text-center px-5 sm:px-6 max-w-4xl -translate-y-10 sm:translate-y-0">
-        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 rounded-full mb-6 sm:mb-8 animate-fade-in">
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-amber-400 fill-amber-400" />
-            ))}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-5 sm:px-6 py-6">
+        <div className="text-center max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 rounded-full mb-5 sm:mb-8 animate-fade-in">
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-amber-400 fill-amber-400" />
+              ))}
+            </div>
+            <span className="text-cream-100 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
+              4,7/5 en Google · +700 reseñas
+            </span>
           </div>
-          <span className="text-cream-100 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
-            4,7/5 en Google · +700 reseñas
-          </span>
-        </div>
 
-        <h1 className="mb-8 sm:mb-10 animate-fade-in-up">
-          <img
-            src="/logo/logo-completo-blanco.svg"
-            alt="Casa Paella"
-            className="mx-auto w-[173px] xs:w-[202px] sm:w-[259px] md:w-[288px] h-auto drop-shadow-lg"
-          />
-        </h1>
+          <h1 className="mb-5 sm:mb-10 animate-fade-in-up">
+            <img
+              src="/logo/logo-completo-blanco.svg"
+              alt="Casa Paella"
+              className="mx-auto w-36 xs:w-44 sm:w-[259px] md:w-[288px] h-auto drop-shadow-lg"
+            />
+          </h1>
 
-        <div
-          className="max-w-2xl mx-auto mb-8 sm:mb-10 animate-fade-in-up"
-          style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
-        >
-          <p className="text-cream-50 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-shadow-md">
-            Un pedacito de España en Bucaramanga
-          </p>
-          <p className="text-base sm:text-lg md:text-xl text-cream-100/90 leading-snug text-shadow-md mt-1">
-            Arroz, fuego, mariscos y buenos momentos.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
-          <button
-            onClick={() => navigate('/reservas')}
-            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base sm:text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-saffron-500/40 hover:scale-105"
+          <div
+            className="max-w-2xl mx-auto mb-5 sm:mb-10 animate-fade-in-up"
+            style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
           >
-            Reservar mesa
-          </button>
-          <button
-            onClick={() => navigate('/menu')}
-            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 hover:bg-cream-50/20 text-cream-50 font-semibold rounded-full text-base sm:text-lg transition-all duration-300 hover:scale-105"
-          >
-            Ver la carta
-          </button>
+            <p className="text-cream-50 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-shadow-md">
+              Un pedacito de España en Bucaramanga
+            </p>
+            <p className="text-base sm:text-lg md:text-xl text-cream-100/90 leading-snug text-shadow-md mt-1">
+              Arroz, fuego, mariscos y buenos momentos.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
+            <button
+              onClick={() => navigate('/reservas')}
+              className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base sm:text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-saffron-500/40 hover:scale-105"
+            >
+              Reservar mesa
+            </button>
+            <button
+              onClick={() => navigate('/menu')}
+              className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 hover:bg-cream-50/20 text-cream-50 font-semibold rounded-full text-base sm:text-lg transition-all duration-300 hover:scale-105"
+            >
+              Ver la carta
+            </button>
+          </div>
         </div>
       </div>
 
       <button
         onClick={() => document.getElementById('show-flamenco')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors animate-fade-in"
+        className="relative z-10 shrink-0 pb-4 sm:pb-8 flex flex-col items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors animate-fade-in"
         style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
       >
         <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium">
