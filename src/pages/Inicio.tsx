@@ -2,15 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { Star, ChevronRight, ChevronDown, MapPin, Phone, Clock, Calendar } from 'lucide-react';
 import { useReveal } from '@/hooks/useReveal';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
-import { featuredDishes, testimonials, restaurantInfo } from '@/data';
-import { formatPrice } from '@/utils/whatsapp';
+import { testimonials, restaurantInfo } from '@/data';
 
 export default function InicioPage() {
   return (
     <>
       <Hero />
       <FlamencoSection />
-      <FeaturedDishes />
       <Reviews />
       <EventsPreview />
       <Location />
@@ -148,61 +146,6 @@ function FlamencoSection() {
             alt="Bailarina de flamenco en Casa Paella junto a clientes disfrutando del show"
             className="w-full h-72 sm:h-96 md:h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
           />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FeaturedDishes() {
-  const navigate = useNavigate();
-  const { ref, visible } = useReveal();
-  return (
-    <section className="py-16 sm:py-24 bg-cream-100">
-      <div ref={ref} className={`max-w-7xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
-        <div className="text-center mb-10 sm:mb-12">
-          <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
-            Platos destacados
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-800 mt-3 mb-3 sm:mb-4">
-            Nuestras <span className="text-saffron-600 italic">especialidades</span>
-          </h2>
-          <p className="text-charcoal-700/60 max-w-xl mx-auto text-sm sm:text-base">
-            Una muestra de lo que encontrarás en nuestra carta completa.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10">
-          {featuredDishes.map((dish) => (
-            <div key={dish.id} className="group relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-saffron-200/40">
-              <div className="relative h-52 sm:h-56 overflow-hidden">
-                <img src={dish.image} alt={dish.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent" />
-                {dish.tag && (
-                  <span className="absolute top-3 right-3 px-3 py-1 bg-saffron-500 text-cream-50 text-xs font-bold rounded-full shadow-md">
-                    {dish.tag}
-                  </span>
-                )}
-                <span className="absolute bottom-3 left-3 px-4 py-1.5 bg-cream-50/95 backdrop-blur-sm text-saffron-700 font-serif text-base font-bold rounded-full shadow-md">
-                  {formatPrice(dish.price)}
-                </span>
-              </div>
-              <div className="p-4 sm:p-5">
-                <h3 className="font-serif text-base sm:text-lg font-bold text-charcoal-800 mb-1.5">{dish.name}</h3>
-                <p className="text-charcoal-700/70 text-xs sm:text-sm leading-relaxed line-clamp-2">{dish.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center">
-          <button
-            onClick={() => navigate('/menu')}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-cream-50 font-bold rounded-full text-base transition-all duration-300 hover:shadow-lg hover:shadow-saffron-500/30 hover:scale-105"
-          >
-            Ver menú completo
-            <ChevronRight className="w-5 h-5" />
-          </button>
         </div>
       </div>
     </section>

@@ -8,7 +8,6 @@ import {
   Phone,
   Sparkles,
   Loader2,
-  ChefHat,
   Minus,
   Plus,
   ArrowRight,

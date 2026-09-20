@@ -155,18 +155,11 @@ export const menuCategories = [
   { id: 'carnes', label: 'Carnes y Pescados', items: carnesPescados },
 ] as const;
 
-export const featuredDishes: Dish[] = [
-  paellas[0],
-  paellas[1],
-  tapas[0],
-  carnesPescados[0],
-];
-
 export const testimonials = [
   {
-    name: 'Luz H. Prada',
-    role: 'Reseña de Google · hace 7 meses',
-    text: 'Un lugar precioso con una paella excelente. Los precios reflejan la calidad de la comida, lo que hace que la experiencia merezca la pena. Como el restaurante no es muy grande, es mejor reservar con antelación.',
+    name: 'Veronica Uribe',
+    role: 'Reseña de Google · hace 4 semanas',
+    text: 'La atención muy chévere, nos explicaron y recomendaron lo mejor de la carta, un lugar lindo para disfrutar y celebrar eventos.',
     rating: 5,
   },
   {
@@ -176,9 +169,9 @@ export const testimonials = [
     rating: 5,
   },
   {
-    name: 'Veronica Uribe',
-    role: 'Reseña de Google · hace 4 semanas',
-    text: 'La atención muy chévere, nos explicaron y recomendaron lo mejor de la carta, un lugar lindo para disfrutar y celebrar eventos.',
+    name: 'Luz H. Prada',
+    role: 'Reseña de Google · hace 7 meses',
+    text: 'Un lugar precioso con una paella excelente. Los precios reflejan la calidad de la comida, lo que hace que la experiencia merezca la pena. Como el restaurante no es muy grande, es mejor reservar con antelación.',
     rating: 5,
   },
 ];
