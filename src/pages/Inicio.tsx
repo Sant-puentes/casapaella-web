@@ -53,7 +53,7 @@ function Hero() {
       <div className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-saffron-500/25 blur-3xl animate-pulse-slow" />
       <div className="absolute bottom-1/4 right-10 w-32 h-32 rounded-full bg-saffron-500/15 blur-3xl animate-pulse-slow" />
 
-      <div className="relative z-10 text-center px-5 sm:px-6 max-w-4xl">
+      <div className="relative z-10 text-center px-5 sm:px-6 max-w-4xl -translate-y-10 sm:translate-y-0">
         <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-cream-50/10 backdrop-blur-sm border border-saffron-500/40 rounded-full mb-6 sm:mb-8 animate-fade-in">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
@@ -78,7 +78,7 @@ function Hero() {
           style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
         >
           <p className="text-cream-50 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-shadow-md">
-            Un pedacito de España en <span className="text-amber-400">Bucaramanga</span>
+            Un pedacito de España en Bucaramanga
           </p>
           <p className="text-base sm:text-lg md:text-xl text-cream-100/90 leading-snug text-shadow-md mt-1">
             Arroz, fuego, mariscos y buenos momentos.
