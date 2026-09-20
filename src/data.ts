@@ -208,8 +208,8 @@ export const eventZones = [
   { name: 'Ruitoque', price: 450000 },
   { name: 'Piedecuesta', price: 450000 },
   { name: 'Girón', price: 400000 },
-  { name: 'Mesa de los Santos', price: 500000 },
-  { name: 'Lebrija', price: 500000 },
+  { name: 'Mesa de los Santos', price: 550000 },
+  { name: 'Lebrija', price: 550000 },
 ];
 
 export const eventPaellaTypes = [
