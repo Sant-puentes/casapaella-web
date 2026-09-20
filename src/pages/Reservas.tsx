@@ -4,6 +4,7 @@ import { useReveal } from '@/hooks/useReveal';
 import { occasionTypes } from '@/data';
 import { sendWhatsApp, buildReservationMessage } from '@/utils/whatsapp';
 import { getReservationSlots, getTodayLocalISODate } from '@/utils/schedule';
+import { saveReservationToCalendar } from '@/utils/calendar';
 
 export default function Reservas() {
   const { ref, visible } = useReveal();
@@ -22,6 +23,9 @@ export default function Reservas() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendWhatsApp(buildReservationMessage(form));
+    // Guarda la reserva en Google Calendar en paralelo (vía Apps Script);
+    // si falla, no interrumpe el flujo de WhatsApp, que es lo que ve el cliente.
+    saveReservationToCalendar(form);
     setSubmitted(true);
   };
 
