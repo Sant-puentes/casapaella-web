@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Users,
   MapPin,
@@ -21,13 +21,15 @@ import { sendWhatsApp, buildEventQuoteMessage, formatPrice } from '@/utils/whats
 import { getTodayLocalISODate } from '@/utils/schedule';
 
 const CALC_DELAY_MS = 900;
+const MIN_EVENT_PEOPLE = 10;
 
 const includedItems = [
   'Chef preparando en vivo',
   'Servicio tipo buffet',
   'Paella y acompañamientos',
-  'Montaje',
-  'Manejo y limpieza',
+  'Montaje y equipos',
+  'Transporte ida y vuelta',
+  'Préstamo de platos y cubiertos',
 ];
 
 export default function Eventos() {
@@ -36,6 +38,8 @@ export default function Eventos() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [calculating, setCalculating] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [peopleShake, setPeopleShake] = useState(false);
+  const shakeTimeoutRef = useRef<number>();
 
   const [form, setForm] = useState({
     name: '',
@@ -59,9 +63,22 @@ export default function Eventos() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const triggerPeopleShake = () => {
+    setPeopleShake(true);
+    window.clearTimeout(shakeTimeoutRef.current);
+    shakeTimeoutRef.current = window.setTimeout(() => setPeopleShake(false), 500);
+  };
+
   const adjustPeople = (delta: number) => {
-    const next = Math.max(1, peopleCount + delta);
+    if (delta < 0 && peopleCount <= MIN_EVENT_PEOPLE) {
+      triggerPeopleShake();
+      return;
+    }
+    const next = Math.max(MIN_EVENT_PEOPLE, peopleCount + delta);
     setForm((prev) => ({ ...prev, people: String(next) }));
+    if (delta < 0 && next === MIN_EVENT_PEOPLE) {
+      triggerPeopleShake();
+    }
   };
 
   const goToResult = () => {
@@ -234,7 +251,11 @@ export default function Eventos() {
                       >
                         <Minus className="w-5 h-5" />
                       </button>
-                      <span className="font-serif text-4xl font-bold text-charcoal-800 w-16 text-center">
+                      <span
+                        className={`font-serif text-4xl font-bold text-charcoal-800 w-16 text-center ${
+                          peopleShake ? 'animate-shake-number' : ''
+                        }`}
+                      >
                         {form.people}
                       </span>
                       <button
@@ -245,6 +266,11 @@ export default function Eventos() {
                         <Plus className="w-5 h-5" />
                       </button>
                     </div>
+                    {peopleCount <= MIN_EVENT_PEOPLE && (
+                      <p className="text-center text-saffron-700 text-xs font-medium mt-1 animate-fade-in">
+                        Los eventos en vivo son para mínimo 10 personas.
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -555,6 +581,16 @@ export default function Eventos() {
         .form-input-light:focus {
           border-color: #981915;
           box-shadow: 0 0 0 1px #981915;
+        }
+        @keyframes shake-number {
+          10%, 90% { transform: translateX(-1px); }
+          20%, 80% { transform: translateX(2px); }
+          30%, 50%, 70% { transform: translateX(-3px); }
+          40%, 60% { transform: translateX(3px); }
+        }
+        .animate-shake-number {
+          animation: shake-number 0.5s ease;
+          color: #981915;
         }
       `}</style>
     </>
