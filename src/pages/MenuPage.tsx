@@ -18,6 +18,12 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 // (o cambiar este valor si usas otro nombre de archivo).
 const MENU_PDF_PATH = '/carta-casapaella.pdf';
 
+// Duración de la animación de paso de página (ms). Debe coincidir con la
+// duración definida en los @keyframes de más abajo.
+const PAGE_TRANSITION_MS = 320;
+
+type Direction = 'next' | 'prev';
+
 export default function MenuPage() {
   const { ref, visible } = useReveal();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +32,11 @@ export default function MenuPage() {
   const [pageNumber, setPageNumber] = useState(1);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [loadError, setLoadError] = useState(false);
+
+  // Controla la animación de "pasar página": dirección del último cambio
+  // y si hay una transición en curso (para bloquear clicks repetidos).
+  const [direction, setDirection] = useState<Direction>('next');
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Mide el ancho disponible para que el PDF se adapte a cualquier pantalla
   // (celular, tablet, escritorio) sin desbordarse ni verse diminuto.
@@ -44,11 +55,46 @@ export default function MenuPage() {
     sendWhatsApp('🥘 *Hola Casa Paella!*\n\nQuiero hacer un pedido, ¿me ayudan con la carta?');
   };
 
-  const goToPrevPage = () => setPageNumber((p) => Math.max(1, p - 1));
-  const goToNextPage = () => setPageNumber((p) => Math.min(numPages, p + 1));
+  const goToPrevPage = () => {
+    if (isAnimating || pageNumber <= 1) return;
+    setDirection('prev');
+    setIsAnimating(true);
+    setPageNumber((p) => Math.max(1, p - 1));
+  };
+
+  const goToNextPage = () => {
+    if (isAnimating || pageNumber >= numPages) return;
+    setDirection('next');
+    setIsAnimating(true);
+    setPageNumber((p) => Math.min(numPages, p + 1));
+  };
 
   return (
     <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 bg-cream-100 min-h-screen">
+      {/* Animación de paso de página: entra deslizándose desde el lado
+          correspondiente a la dirección de navegación, con leve fade. */}
+      <style>{`
+        @keyframes page-turn-next {
+          from { transform: translateX(36px); opacity: 0; }
+          to   { transform: translateX(0);    opacity: 1; }
+        }
+        @keyframes page-turn-prev {
+          from { transform: translateX(-36px); opacity: 0; }
+          to   { transform: translateX(0);      opacity: 1; }
+        }
+        .page-turn-next {
+          animation: page-turn-next ${PAGE_TRANSITION_MS}ms ease-out both;
+        }
+        .page-turn-prev {
+          animation: page-turn-prev ${PAGE_TRANSITION_MS}ms ease-out both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .page-turn-next, .page-turn-prev {
+            animation: none;
+          }
+        }
+      `}</style>
+
       <div ref={ref} className={`max-w-5xl mx-auto px-5 sm:px-6 ${visible ? 'reveal visible' : 'reveal'}`}>
         <div className="text-center mb-8 sm:mb-10">
           <span className="text-saffron-600 font-semibold text-xs sm:text-sm uppercase tracking-widest">
@@ -93,11 +139,23 @@ export default function MenuPage() {
                 className="max-w-full"
               >
                 {containerWidth > 0 && (
-                  <Page
-                    pageNumber={pageNumber}
-                    width={Math.min(containerWidth, 900)}
-                    renderAnnotationLayer={false}
-                  />
+                  // overflow-hidden recorta el ligero desplazamiento lateral
+                  // de la animación para que no aparezca scroll horizontal.
+                  <div className="w-full overflow-hidden">
+                    <div
+                      // La key cambia con cada página, así React vuelve a
+                      // montar este div y dispara la animación de nuevo.
+                      key={pageNumber}
+                      className={direction === 'next' ? 'page-turn-next' : 'page-turn-prev'}
+                      onAnimationEnd={() => setIsAnimating(false)}
+                    >
+                      <Page
+                        pageNumber={pageNumber}
+                        width={Math.min(containerWidth, 900)}
+                        renderAnnotationLayer={false}
+                      />
+                    </div>
+                  </div>
                 )}
               </Document>
 
@@ -106,7 +164,7 @@ export default function MenuPage() {
                 <div className="flex items-center justify-center gap-4 py-4 border-t border-saffron-500/10 w-full">
                   <button
                     onClick={goToPrevPage}
-                    disabled={pageNumber <= 1}
+                    disabled={pageNumber <= 1 || isAnimating}
                     className="w-9 h-9 flex items-center justify-center rounded-full bg-cream-200 text-charcoal-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-saffron-100 transition-colors"
                     aria-label="Página anterior"
                   >
@@ -117,7 +175,7 @@ export default function MenuPage() {
                   </span>
                   <button
                     onClick={goToNextPage}
-                    disabled={pageNumber >= numPages}
+                    disabled={pageNumber >= numPages || isAnimating}
                     className="w-9 h-9 flex items-center justify-center rounded-full bg-cream-200 text-charcoal-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-saffron-100 transition-colors"
                     aria-label="Página siguiente"
                   >
