@@ -12,6 +12,23 @@
 
 import { google } from 'googleapis';
 
+// Tu formulario envía la hora en formato de 12 horas, ej. "12:30 PM" o "6:00 PM"
+// (así la genera src/utils/schedule.ts). Esta función la convierte a 24 horas
+// ("12:30" / "18:00") para poder construir un Date válido.
+function to24Hour(time12h) {
+  const match = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec((time12h || '').trim());
+  if (!match) return null;
+
+  let [, hourStr, minuteStr, period] = match;
+  let hour = parseInt(hourStr, 10);
+  const minute = parseInt(minuteStr, 10);
+
+  if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
+  if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
+
+  return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -34,8 +51,16 @@ export default async function handler(req, res) {
 
     const calendar = google.calendar({ version: 'v3', auth });
 
-    // Combina fecha ("2026-09-20") y hora ("13:30") interpretándolas en hora de Bogotá (UTC-5).
-    const start = new Date(`${date}T${time}:00-05:00`);
+    // Convierte "12:30 PM" -> "12:30" antes de armar la fecha/hora en Bogotá (UTC-5).
+    const time24 = to24Hour(time);
+    if (!time24) {
+      return res.status(400).json({ error: `Formato de hora no reconocido: "${time}"` });
+    }
+
+    const start = new Date(`${date}T${time24}:00-05:00`);
+    if (isNaN(start.getTime())) {
+      return res.status(400).json({ error: `Fecha u hora inválida: "${date} ${time}"` });
+    }
     const durationMinutes = 90; // duración estimada de la mesa; ajústala si lo necesitas
     const end = new Date(start.getTime() + durationMinutes * 60000);
 
@@ -63,6 +88,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true, eventId: response.data.id });
   } catch (err) {
     console.error('Error creando evento en Google Calendar:', err);
-    return res.status(500).json({ error: 'No se pudo guardar la reserva en el calendario' });
+    return res.status(500).json({ error: 'No se pudo guardar la reserva en el calendario', detail: err.message });
   }
 }
