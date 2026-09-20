@@ -128,8 +128,8 @@ function FlamencoSection() {
         </div>
         <div className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-2xl group">
           <img
-            src="https://images.pexels.com/photos/13863662/pexels-photo-13863662.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Bailarina de flamenco"
+            src="/images/show-flamenco.jpg"
+            alt="Bailarina de flamenco en Casa Paella junto a clientes disfrutando del show"
             className="w-full h-72 sm:h-96 md:h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
           />
         </div>
