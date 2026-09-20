@@ -118,9 +118,6 @@ export default function Reservas() {
                 </select>
               </Field>
             </div>
-            <p className="text-cream-100/50 text-xs -mt-2">
-              Horario de reservas: lunes y domingo, 12:00 PM – 3:00 PM. Martes a sábado, 12:00 PM – 3:00 PM y 6:00 PM – 9:00 PM.
-            </p>
 
             <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
               <Field icon={User} label="Nombre completo">
@@ -159,9 +156,8 @@ export default function Reservas() {
                   className="form-input"
                 />
               </Field>
-              <Field icon={Calendar} label="Tipo de ocasión">
+              <Field icon={Calendar} label="¿Celebras algo? (opcional)">
                 <select
-                  required
                   value={form.occasion}
                   onChange={(e) => update('occasion', e.target.value)}
                   className="form-input"
