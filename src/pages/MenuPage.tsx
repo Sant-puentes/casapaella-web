@@ -33,8 +33,14 @@ export default function MenuPage() {
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [loadError, setLoadError] = useState(false);
 
-  // Controla la animación de "pasar página": dirección del último cambio
-  // y si hay una transición en curso (para bloquear clicks repetidos).
+  // Se activa cuando el PDF termina de renderizarse por primera vez, para
+  // disparar la animación de entrada (fade + slide-up). Es la animación que
+  // SIEMPRE se ve, sin importar si la carta tiene 1 o varias páginas.
+  const [docLoaded, setDocLoaded] = useState(false);
+
+  // Controla la animación de "pasar página" al usar las flechas: dirección
+  // del último cambio y si hay una transición en curso (bloquea clicks
+  // repetidos). Solo aplica cuando la carta tiene más de una página.
   const [direction, setDirection] = useState<Direction>('next');
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -71,9 +77,19 @@ export default function MenuPage() {
 
   return (
     <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 bg-cream-100 min-h-screen">
-      {/* Animación de paso de página: entra deslizándose desde el lado
-          correspondiente a la dirección de navegación, con leve fade. */}
+      {/* Animaciones del visor de carta:
+          - fade-in-up: entrada del visor cuando el PDF termina de cargar
+            (se ve siempre, sin importar cuántas páginas tenga la carta).
+          - page-turn-next/prev: deslizamiento al cambiar de página con las
+            flechas (solo aplica si la carta tiene más de una página). */}
       <style>{`
+        @keyframes fade-in-up {
+          from { transform: translateY(16px); opacity: 0; }
+          to   { transform: translateY(0);    opacity: 1; }
+        }
+        .viewer-fade-in {
+          animation: fade-in-up 500ms ease-out both;
+        }
         @keyframes page-turn-next {
           from { transform: translateX(36px); opacity: 0; }
           to   { transform: translateX(0);    opacity: 1; }
@@ -89,7 +105,7 @@ export default function MenuPage() {
           animation: page-turn-prev ${PAGE_TRANSITION_MS}ms ease-out both;
         }
         @media (prefers-reduced-motion: reduce) {
-          .page-turn-next, .page-turn-prev {
+          .viewer-fade-in, .page-turn-next, .page-turn-prev {
             animation: none;
           }
         }
@@ -111,7 +127,9 @@ export default function MenuPage() {
         {/* Visor de PDF embebido (renderizado con PDF.js, funciona igual en móvil) */}
         <div
           ref={containerRef}
-          className="rounded-2xl overflow-hidden shadow-xl border border-saffron-500/20 bg-cream-50 flex flex-col items-center"
+          className={`rounded-2xl overflow-hidden shadow-xl border border-saffron-500/20 bg-cream-50 flex flex-col items-center ${
+            docLoaded ? 'viewer-fade-in' : 'opacity-0'
+          }`}
         >
           {loadError ? (
             <div className="flex flex-col items-center justify-center text-center px-6 py-16">
@@ -131,7 +149,10 @@ export default function MenuPage() {
             <>
               <Document
                 file={MENU_PDF_PATH}
-                onLoadSuccess={({ numPages: n }) => setNumPages(n)}
+                onLoadSuccess={({ numPages: n }) => {
+                  setNumPages(n);
+                  setDocLoaded(true);
+                }}
                 onLoadError={() => setLoadError(true)}
                 loading={
                   <p className="text-charcoal-700/60 text-sm py-16">Cargando carta…</p>
@@ -159,7 +180,7 @@ export default function MenuPage() {
                 )}
               </Document>
 
-              {/* Controles de navegación entre páginas */}
+              {/* Controles de navegación entre páginas (solo si hay más de 1) */}
               {numPages > 1 && (
                 <div className="flex items-center justify-center gap-4 py-4 border-t border-saffron-500/10 w-full">
                   <button
