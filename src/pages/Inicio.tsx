@@ -65,7 +65,7 @@ function Hero() {
           </span>
         </div>
 
-        <h1 className="mb-3 sm:mb-4 animate-fade-in-up">
+        <h1 className="mb-8 sm:mb-10 animate-fade-in-up">
           <img
             src="/logo/logo-completo-blanco.svg"
             alt="Casa Paella"
@@ -73,16 +73,17 @@ function Hero() {
           />
         </h1>
 
-        <p
-          className="text-saffron-400 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-3 sm:mb-4 text-shadow-md animate-fade-in-up"
+        <div
+          className="max-w-2xl mx-auto mb-8 sm:mb-10 animate-fade-in-up"
           style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
         >
-          Un pedacito de España en Bucaramanga
-        </p>
-
-        <p className="text-base sm:text-lg md:text-xl text-cream-100/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-shadow-md animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-          Arroz, fuego, mariscos y buenos momentos alrededor de una paella.
-        </p>
+          <p className="text-cream-50 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-shadow-md">
+            Un pedacito de España en <span className="text-amber-400">Bucaramanga</span>
+          </p>
+          <p className="text-base sm:text-lg md:text-xl text-cream-100/90 leading-snug text-shadow-md mt-1">
+            Arroz, fuego, mariscos y buenos momentos.
+          </p>
+        </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
           <button
@@ -102,7 +103,7 @@ function Hero() {
 
       <button
         onClick={() => document.getElementById('show-flamenco')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-cream-100/80 hover:text-cream-50 transition-colors animate-fade-in"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors animate-fade-in"
         style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
       >
         <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium">
