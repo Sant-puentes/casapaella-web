@@ -1,6 +1,17 @@
-import { Download, ExternalLink } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReveal } from '@/hooks/useReveal';
 import { sendWhatsApp } from '@/utils/whatsapp';
+
+// Configuración obligatoria del worker de PDF.js. Debe ir en el mismo archivo
+// donde se usan <Document> / <Page> (ver documentación de react-pdf).
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 // Ruta del PDF dentro de /public. Para reemplazar la carta en el futuro,
 // solo hay que subir el nuevo PDF a /public con este mismo nombre
@@ -9,10 +20,32 @@ const MENU_PDF_PATH = '/carta-casapaella.pdf';
 
 export default function MenuPage() {
   const { ref, visible } = useReveal();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [numPages, setNumPages] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [loadError, setLoadError] = useState(false);
+
+  // Mide el ancho disponible para que el PDF se adapte a cualquier pantalla
+  // (celular, tablet, escritorio) sin desbordarse ni verse diminuto.
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   const handleOrder = () => {
     sendWhatsApp('🥘 *Hola Casa Paella!*\n\nQuiero hacer un pedido, ¿me ayudan con la carta?');
   };
+
+  const goToPrevPage = () => setPageNumber((p) => Math.max(1, p - 1));
+  const goToNextPage = () => setPageNumber((p) => Math.min(numPages, p + 1));
 
   return (
     <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 bg-cream-100 min-h-screen">
@@ -29,40 +62,15 @@ export default function MenuPage() {
           </p>
         </div>
 
-        {/* Botones de acción */}
-        <div className="flex flex-wrap justify-center gap-3 mb-6 sm:mb-8">
-          <a
-            href={MENU_PDF_PATH}
-            download
-            className="flex items-center gap-2 px-5 py-2.5 bg-cream-50 border border-saffron-500/30 text-charcoal-800 font-semibold rounded-full text-sm hover:border-saffron-500 transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            Descargar carta
-          </a>
-          <a
-            href={MENU_PDF_PATH}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 bg-cream-50 border border-saffron-500/30 text-charcoal-800 font-semibold rounded-full text-sm hover:border-saffron-500 transition-colors"
-          >
-            <ExternalLink className="w-4 h-4" />
-            Abrir en pestaña nueva
-          </a>
-        </div>
-
-        {/* Visor de PDF embebido */}
-        <div className="rounded-2xl overflow-hidden shadow-xl border border-saffron-500/20 bg-cream-50">
-          {/* object con fallback: si el navegador no puede mostrar el PDF embebido
-              (frecuente en algunos navegadores móviles), muestra un aviso con enlaces. */}
-          <object
-            data={MENU_PDF_PATH}
-            type="application/pdf"
-            className="w-full"
-            style={{ height: '80vh', minHeight: 480 }}
-          >
+        {/* Visor de PDF embebido (renderizado con PDF.js, funciona igual en móvil) */}
+        <div
+          ref={containerRef}
+          className="rounded-2xl overflow-hidden shadow-xl border border-saffron-500/20 bg-cream-50 flex flex-col items-center"
+        >
+          {loadError ? (
             <div className="flex flex-col items-center justify-center text-center px-6 py-16">
               <p className="text-charcoal-700/70 text-sm sm:text-base mb-4">
-                Tu navegador no puede mostrar el PDF aquí, pero puedes verlo directamente:
+                No pudimos cargar la carta aquí, pero puedes verla directamente:
               </p>
               <a
                 href={MENU_PDF_PATH}
@@ -73,7 +81,52 @@ export default function MenuPage() {
                 Ver carta en PDF
               </a>
             </div>
-          </object>
+          ) : (
+            <>
+              <Document
+                file={MENU_PDF_PATH}
+                onLoadSuccess={({ numPages: n }) => setNumPages(n)}
+                onLoadError={() => setLoadError(true)}
+                loading={
+                  <p className="text-charcoal-700/60 text-sm py-16">Cargando carta…</p>
+                }
+                className="max-w-full"
+              >
+                {containerWidth > 0 && (
+                  <Page
+                    pageNumber={pageNumber}
+                    width={Math.min(containerWidth, 900)}
+                    renderAnnotationLayer={false}
+                  />
+                )}
+              </Document>
+
+              {/* Controles de navegación entre páginas */}
+              {numPages > 1 && (
+                <div className="flex items-center justify-center gap-4 py-4 border-t border-saffron-500/10 w-full">
+                  <button
+                    onClick={goToPrevPage}
+                    disabled={pageNumber <= 1}
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-cream-200 text-charcoal-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-saffron-100 transition-colors"
+                    aria-label="Página anterior"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <span className="text-charcoal-700/70 text-sm font-medium">
+                    Página {pageNumber} de {numPages}
+                  </span>
+                  <button
+                    onClick={goToNextPage}
+                    disabled={pageNumber >= numPages}
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-cream-200 text-charcoal-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-saffron-100 transition-colors"
+                    aria-label="Página siguiente"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {/* CTA para pedir por WhatsApp */}
