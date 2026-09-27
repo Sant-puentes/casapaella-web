@@ -61,10 +61,9 @@ export default function PdfCarouselViewer({ file, headerLabel, onOrder }: PdfCar
 
   // Zoom (pellizco / doble toque) + pan, solo sobre la pagina activa
   const [zoom, setZoom] = useState(1);
-  const [zoomOrigin, setZoomOrigin] = useState({ x: 50, y: 50 });
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isGesturing, setIsGesturing] = useState(false);
-  const pinchRef = useRef({ active: false, startDist: 0, startZoom: 1 });
+  const pinchRef = useRef({ active: false, startDist: 0, startZoom: 1, startPan: { x: 0, y: 0 } });
   const panRef = useRef({ active: false, startX: 0, startY: 0, startPan: { x: 0, y: 0 } });
   const lastTapRef = useRef(0);
 
@@ -201,6 +200,26 @@ export default function PdfCarouselViewer({ file, headerLabel, onOrder }: PdfCar
     [numPages],
   );
 
+  // Con la escala anclada siempre al centro (transform-origin: center),
+  // el desplazamiento maximo permitido es la mitad de lo que la pagina
+  // ampliada sobresale del stage. Esto evita que, al hacer zoom o pan,
+  // la pagina termine fuera del recuadro visible.
+  const clampPanForZoom = useCallback(
+    (candidate: { x: number; y: number }, zoomVal: number) => {
+      const canvas = canvasRefs.current[currentPage];
+      if (!canvas || stageSize.width === 0 || stageSize.height === 0) return { x: 0, y: 0 };
+      const cssW = parseFloat(canvas.style.width || '0') * zoomVal;
+      const cssH = parseFloat(canvas.style.height || '0') * zoomVal;
+      const maxX = Math.max(0, (cssW - stageSize.width) / 2);
+      const maxY = Math.max(0, (cssH - stageSize.height) / 2);
+      return {
+        x: Math.max(-maxX, Math.min(maxX, candidate.x)),
+        y: Math.max(-maxY, Math.min(maxY, candidate.y)),
+      };
+    },
+    [currentPage, stageSize],
+  );
+
   // --- Navegacion por teclado (respaldo de accesibilidad) ---
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -231,7 +250,12 @@ export default function PdfCarouselViewer({ file, headerLabel, onOrder }: PdfCar
   // ---- Gestos tactiles ----
   const handleTouchStart = (e: ReactTouchEvent<HTMLDivElement>) => {
     if (e.touches.length === 2) {
-      pinchRef.current = { active: true, startDist: getTouchDist(e.touches), startZoom: zoom };
+      pinchRef.current = {
+        active: true,
+        startDist: getTouchDist(e.touches),
+        startZoom: zoom,
+        startPan: pan,
+      };
       setIsGesturing(true);
       return;
     }
@@ -251,13 +275,20 @@ export default function PdfCarouselViewer({ file, headerLabel, onOrder }: PdfCar
         lastTapRef.current = 0;
         const rect = stageRef.current?.getBoundingClientRect();
         if (rect) {
-          setZoomOrigin({
-            x: ((e.touches[0].clientX - rect.left) / rect.width) * 100,
-            y: ((e.touches[0].clientY - rect.top) / rect.height) * 100,
-          });
+          // Zoom centrado en el punto tocado, pero usando el mismo
+          // sistema de "translate" que el pinch (no transform-origin),
+          // para que ambos gestos compartan un único limite de pan.
+          const dx = e.touches[0].clientX - (rect.left + rect.width / 2);
+          const dy = e.touches[0].clientY - (rect.top + rect.height / 2);
+          if (zoom > 1.05) {
+            setZoom(1);
+            setPan({ x: 0, y: 0 });
+          } else {
+            const newZoom = DOUBLE_TAP_ZOOM;
+            setZoom(newZoom);
+            setPan(clampPanForZoom({ x: dx - newZoom * dx, y: dy - newZoom * dy }, newZoom));
+          }
         }
-        setZoom(DOUBLE_TAP_ZOOM);
-        setPan({ x: 0, y: 0 });
         return;
       }
       lastTapRef.current = now;
@@ -271,17 +302,41 @@ export default function PdfCarouselViewer({ file, headerLabel, onOrder }: PdfCar
   const handleTouchMove = (e: ReactTouchEvent<HTMLDivElement>) => {
     if (e.touches.length === 2 && pinchRef.current.active) {
       const dist = getTouchDist(e.touches);
-      const next = Math.min(
+      const nextZoom = Math.min(
         MAX_ZOOM,
         Math.max(MIN_ZOOM, pinchRef.current.startZoom * (dist / pinchRef.current.startDist)),
       );
-      setZoom(next);
+      const rect = stageRef.current?.getBoundingClientRect();
+      if (rect) {
+        // Punto medio entre los dos dedos, relativo al centro del stage:
+        // ancla el zoom ahí (en vez de a un transform-origin fijo) para
+        // que el gesto siga a los dedos de forma natural.
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const dx = midX - (rect.left + rect.width / 2);
+        const dy = midY - (rect.top + rect.height / 2);
+        const ratio = nextZoom / pinchRef.current.startZoom;
+        const rawPan = {
+          x: dx - ratio * (dx - pinchRef.current.startPan.x),
+          y: dy - ratio * (dy - pinchRef.current.startPan.y),
+        };
+        // Se limita en cada movimiento (no solo al soltar) para que la
+        // pagina nunca se salga visualmente del recuadro mientras se
+        // pellizca.
+        setPan(clampPanForZoom(rawPan, nextZoom));
+      }
+      setZoom(nextZoom);
       return;
     }
     if (e.touches.length === 1 && zoom > 1 && panRef.current.active) {
       const dx = e.touches[0].clientX - panRef.current.startX;
       const dy = e.touches[0].clientY - panRef.current.startY;
-      setPan({ x: panRef.current.startPan.x + dx, y: panRef.current.startPan.y + dy });
+      setPan(
+        clampPanForZoom(
+          { x: panRef.current.startPan.x + dx, y: panRef.current.startPan.y + dy },
+          zoom,
+        ),
+      );
       return;
     }
     if (draggingRef.current && zoom <= 1) {
@@ -411,7 +466,6 @@ export default function PdfCarouselViewer({ file, headerLabel, onOrder }: PdfCar
                   style={{
                     transform:
                       n === currentPage ? `translate(${pan.x}px, ${pan.y}px) scale(${zoom})` : undefined,
-                    transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`,
                     transition: isGesturing ? 'none' : 'transform 200ms ease-out',
                   }}
                 >
