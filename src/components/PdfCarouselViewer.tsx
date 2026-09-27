@@ -34,8 +34,10 @@ const THUMB_WIDTH = 90;
 // para que el cross-fade quede sincronizado con el cambio de frase.
 const ANNOUNCEMENTS = [
   'Sábados, 7:30 PM — show de flamenco en vivo',
-  'Tu evento, con la paella preparada en vivo',
+  'Cotiza tu evento, con la paella preparada en vivo',
   'Cotiza tu paella para 20, 30 o cuantos invitados quieras',
+  'Reserva tu mesa y celebra con decoración especial',
+  'Vamos hasta tu evento en Bucaramanga y alrededores',
 ];
 const ANNOUNCEMENT_MS = 4500;
 
