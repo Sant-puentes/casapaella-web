@@ -9,7 +9,7 @@ import {
 } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { ChevronLeft, ChevronRight, CalendarCheck } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CalendarCheck, Sparkles } from 'lucide-react';
 
 // Worker de PDF.js servido desde el propio dominio (Vite lo empaqueta como
 // asset local vía import.meta.url), nunca desde un CDN externo: si se carga
@@ -28,6 +28,16 @@ const DOUBLE_TAP_ZOOM = 2.2;
 const DOUBLE_TAP_MS = 300;
 const PRELOAD_RADIUS = 2;
 const THUMB_WIDTH = 90;
+
+// Frases del panel informativo rotativo del header. ANNOUNCEMENT_MS debe
+// coincidir con la duración del keyframe "announcementFade" de más abajo,
+// para que el cross-fade quede sincronizado con el cambio de frase.
+const ANNOUNCEMENTS = [
+  'Sábados, 7:30 PM — show de flamenco en vivo',
+  'Tu evento, con la paella preparada en vivo',
+  'Cotiza tu paella para 20, 30 o cuantos invitados quieras',
+];
+const ANNOUNCEMENT_MS = 4500;
 
 interface PdfCarouselViewerProps {
   file: string;
@@ -60,6 +70,7 @@ export default function PdfCarouselViewer({
   const [loadError, setLoadError] = useState(false);
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
   const [, setRenderTick] = useState(0);
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
 
   // Arrastre horizontal (swipe) para cambiar de pagina
   const [dragOffset, setDragOffset] = useState(0);
@@ -240,6 +251,14 @@ export default function PdfCarouselViewer({
     return () => window.removeEventListener('keydown', onKey);
   }, [currentPage, goTo]);
 
+  // --- Panel informativo: rota las frases cada ANNOUNCEMENT_MS ---
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setAnnouncementIndex((i) => (i + 1) % ANNOUNCEMENTS.length);
+    }, ANNOUNCEMENT_MS);
+    return () => window.clearInterval(id);
+  }, []);
+
   const getTouchDist = (touches: React.TouchList) => {
     const dx = touches[0].clientX - touches[1].clientX;
     const dy = touches[0].clientY - touches[1].clientY;
@@ -408,6 +427,18 @@ export default function PdfCarouselViewer({
           background-size: 200% 100%;
           animation: pdfShimmer 1.6s ease-in-out infinite;
         }
+        @keyframes announcementFade {
+          0% { opacity: 0; transform: translateY(4px); }
+          10% { opacity: 1; transform: translateY(0); }
+          90% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-4px); }
+        }
+        .announcement-fade {
+          animation: announcementFade ${ANNOUNCEMENT_MS}ms ease-in-out;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .announcement-fade { animation: none; }
+        }
       `}</style>
 
       {/* Header fijo */}
@@ -419,6 +450,17 @@ export default function PdfCarouselViewer({
         <span className="text-cream-50 text-xs sm:text-sm font-semibold tracking-widest uppercase">
           {headerLabel}
         </span>
+      </div>
+
+      {/* Panel informativo rotativo */}
+      <div className="flex-shrink-0 flex items-center justify-center gap-1.5 bg-saffron-500/10 border-b border-saffron-500/10 py-1.5 px-4 overflow-hidden">
+        <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-saffron-400 shrink-0" aria-hidden="true" />
+        <p
+          key={announcementIndex}
+          className="announcement-fade text-saffron-200/90 text-[11px] sm:text-xs font-medium text-center truncate"
+        >
+          {ANNOUNCEMENTS[announcementIndex]}
+        </p>
       </div>
 
       {/* Stage */}
