@@ -11,9 +11,7 @@ export default function MenuPage() {
   const navigate = useNavigate();
 
   const handleOrder = () => {
-    sendWhatsApp(
-      '🥘 *Hola Casa Paella!*\n\nYa vi la carta y quiero hacer un pedido. ¿Me ayudan a completarlo?',
-    );
+    sendWhatsApp('🥘 *Hola Casa Paella!*\n\nYa vi la carta y quiero hacer un pedido.');
   };
 
   return (
